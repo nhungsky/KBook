@@ -1,0 +1,96 @@
+<div [@routerTransition]>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6">
+                    <h1>{{ "FileSystem" | localize }}</h1>
+                </div>
+                <div class="col-6 text-right">
+                    <input type="file" class="d-none" (change)="handleFileInput($event.target.files)" #fileInput>
+                    <button href="javascript:;" class="btn btn-primary shadow-sm" (click)="fileInput.click()">
+                        <i class="fa fa-upload mr-2"></i>
+                        {{ "Upload" | localize }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">&emsp;</div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn bg-blue" (click)="search()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control" name="keyword"
+                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" [busy]="isLoading">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="">{{ "Name" | localize }}</th>
+                                    <th class="text-center">{{ "CreationTime" | localize }}</th>
+                                    <th class="text-center" style="width: 300px;">{{ "Actions" | localize }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fileInfo of fileInfos">
+                                    <td>{{ fileInfo.name }}</td>
+                                    <td>{{ fileInfo.creationTime }}</td>
+                                    <td class="text-center">
+                                        <a href="{{appBaseUrl}}/{{fileInfo.fullName}}" target="_blank"
+                                            download="{{fileInfo.fullName}}" class="btn btn-sm btn-primary">
+                                            <i class="fa fa-download"></i>
+                                            {{ "Download" | localize }}
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-warning mx-2 text-white"
+                                            (click)="renameFile(fileInfo)">
+                                            <i class="fas fa-pencil-alt"></i>
+                                            {{ "Rename" | localize }}
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            (click)="delete(fileInfo.name)">
+                                            <i class="fas fa-trash"></i>
+                                            {{ "Delete" | localize }}
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer table-card-footer bg-light border-top">
+                    <div class="row">
+                        <div class="col-sm-4 col-12 text-sm-left text-center">
+                            <button class="btn btn-secondary" (click)="refresh()">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 text-center">
+                            <p class="mb-0 my-2">
+                                {{ "TotalRecordsCount" | localize: fileInfos?.length }}
+                            </p>
+                        </div>
+                        <!-- <div class="col-sm-4 col-12">
+                            <div class="float-sm-right m-auto">
+                                <abp-pagination-controls id="server" (pageChange)="getDataPage($event)">
+                                </abp-pagination-controls>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

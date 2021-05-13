@@ -1,0 +1,26 @@
+<form class="form-horizontal" autocomplete="off" #renameFileModal="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'RenameFile' | localize" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="oldName">
+                {{ "OldName" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="hidden" name="oldName" value="{{oldName}}" />
+                <input type="text" class="form-control" required maxlength="255" value="{{oldName}}" disabled />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="newName">
+                {{ "NewName" | localize }}
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="newName" id="newName" required maxlength="255"
+                    [(ngModel)]="newName" #newNameModel="ngModel" #newNameEl />
+                <abp-validation-summary [control]="newNameModel" [controlEl]="newNameEl"></abp-validation-summary>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!renameFileModal.form.valid || saving"
+        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

@@ -1,0 +1,16 @@
+﻿using Abp.Application.Services;
+using ASPCore.Angular.Posts.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ASPCore.Angular.Posts
+{
+    public interface IPostAppService : IAsyncCrudAppService<PostDto, int, PagedPostResultRequestDto>
+    {
+        public Task NotApproved(int id);
+        public Task Approval(int id);
+    }
+}
