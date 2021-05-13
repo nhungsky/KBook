@@ -82,3 +82,11 @@ body {
 .clickable {
   cursor: pointer;
 }
+.login-page {
+  background-image: url('../../img/tong-hop-cac-mau-background-dep-nhat-10070-6.jpg');
+  background-size: 100% 100%;
+}
+
+.btn {
+  border-radius: 15px;
+}
