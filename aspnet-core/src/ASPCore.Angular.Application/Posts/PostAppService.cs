@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using ASPCore.Angular.Posts.Dto;
 using System;
@@ -25,6 +26,19 @@ namespace ASPCore.Angular.Posts
             await Repository.UpdateAsync(current);
         }
 
+        public PagedResultDto<PostListDto> GetListSimple(PagedPostResultRequestDto input)
+        {
+            var query = CreateFilteredQuery(input);
+            query = ApplySorting(query, input);
+            var postResult = ApplyPaging(query, input).ToList();
+            var result = new PagedResultDto<PostListDto>
+            {
+                Items = ObjectMapper.Map<List<PostListDto>>(postResult),
+                TotalCount = query.Count(),
+            };
+            return result;
+        }
+
         public async Task NotApproved(int id)
         {
             var current = Repository.Get(id);
@@ -33,5 +47,7 @@ namespace ASPCore.Angular.Posts
             current.IsActive = false;
             await Repository.UpdateAsync(current);
         }
+
+
     }
 }

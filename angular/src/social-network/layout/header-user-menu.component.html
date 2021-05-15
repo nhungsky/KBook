@@ -1,0 +1,18 @@
+<li class="nav-item dropdown nav-user-menu" dropdown>
+  <a href="javascript:;" class="nav-link" dropdownToggle>
+    <img class="user-image img-circle elevation-2" src="{{currentUserAvatar}}" alt="{{currentUserName}}" />
+  </a>
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+    <a class="dropdown-item" [routerLink]="['users','update-profile']">
+      <i class="fas fa-user-edit mr-2"></i> {{ "UpdateProfile" | localize }}
+    </a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" [routerLink]="['update-password']">
+      <i class="fa fa-key mr-2"></i> {{ "UpdatePassword" | localize }}
+    </a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item text-danger" href="javascript:;" (click)="logout()">
+      <i class="fas fa-sign-out-alt mr-2"></i> {{ "Logout" | localize }}
+    </a>
+  </div>
+</li>
