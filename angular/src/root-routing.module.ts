@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
+  { path: "", redirectTo: "/manager/about", pathMatch: "full" },
   {
     path: "account",
     loadChildren: () =>
@@ -12,12 +13,7 @@ const routes: Routes = [
     path: "manager",
     loadChildren: () => import("app/app.module").then((m) => m.AppModule), // Lazy load account module
     data: { preload: true },
-  },
-  {
-    path: "",
-    loadChildren: () => import("social-network/social-network.module").then((m) => m.SocialNetworkModule), // Lazy load account module
-    data: { preload: true },
-  },
+  }
 ];
 
 @NgModule({
