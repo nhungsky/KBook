@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/manager/about", pathMatch: "full" },
+  // { path: "", redirectTo: "/manager/about", pathMatch: "full" },
   {
     path: "account",
     loadChildren: () =>
@@ -10,7 +10,7 @@ const routes: Routes = [
     data: { preload: true },
   },
   {
-    path: "manager",
+    path: "",
     loadChildren: () => import("app/app.module").then((m) => m.AppModule), // Lazy load account module
     data: { preload: true },
   }

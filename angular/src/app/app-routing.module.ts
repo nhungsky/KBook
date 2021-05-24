@@ -14,12 +14,14 @@ import { UpdateProfileComponent } from "./users/update-profile/update-profile.co
 import { PlacesComponent } from "./places/places.component";
 import { PostsComponent } from "./posts/posts.component";
 import { PostCategoriesComponent } from "./post-categories/post-categories.component";
+import { SocialNetworkComponent } from "./social-network/social-network.component";
+import { SocialHomeComponent } from "./social-network/social-home/social-home.component";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
-        path: "",
+        path: "manager",
         component: AppComponent,
         children: [
           {
@@ -87,8 +89,19 @@ import { PostCategoriesComponent } from "./post-categories/post-categories.compo
           },
         ],
       },
+      {
+        path: "",
+        component: SocialNetworkComponent,
+        children: [
+          {
+            path: "",
+            component: SocialHomeComponent,
+            canActivate: [AppRouteGuard],
+          },
+        ]
+      }
     ]),
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

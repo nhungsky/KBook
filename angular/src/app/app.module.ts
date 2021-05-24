@@ -55,6 +55,10 @@ import { CreatePlaceComponent } from "./places/create-place/create-place.compone
 import { UpdatePlaceComponent } from "./places/update-place/update-place.component";
 import { AgmCoreModule } from "@agm/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { SocialNetworkComponent } from './social-network/social-network.component';
+import { SocialHomeComponent } from './social-network/social-home/social-home.component';
+import { SocialHeaderComponent } from './layout/social-header/social-header.component';
+import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +104,10 @@ import { BrowserModule } from "@angular/platform-browser";
     PlacesComponent,
     CreatePlaceComponent,
     UpdatePlaceComponent,
+    SocialNetworkComponent,
+    SocialHomeComponent,
+    SocialHeaderComponent,
+    SocialSidebarComponent,
   ],
   imports: [
     CommonModule,
