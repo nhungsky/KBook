@@ -11,5 +11,6 @@ namespace ASPCore.Angular.Posts.Dto
     {
         public string Keyword { get; set; }
         public bool? IsActive { get; set; }
+        public int? PostCategoryId { get; set; }
     }
 }
