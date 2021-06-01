@@ -43,18 +43,18 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
   getMenuItems(): MenuItem[] {
     return [
-      new MenuItem(this.l("HomePage"), "/manager/home", "fas fa-home"),
-      new MenuItem(this.l("Posts"), "", "fa fa-database", "", [
-        new MenuItem(this.l("All Posts"), "/manager/posts", "fa fa-clone"),
+      new MenuItem("Bảng điều khiển", "/manager/home", "fas fa-home"),
+      new MenuItem("Bài viết", "", "fa fa-database", "", [
+        new MenuItem("Danh sách bài viết", "/manager/posts", "fa fa-clone"),
         new MenuItem(
-          this.l("Categories"),
+          "Chủ đề",
           "/manager/post-categories",
           "fa fa-sitemap"
         ),
       ]),
-      new MenuItem(this.l("Places"), "/manager/places", "fa fa-map-marker", ""),
+      new MenuItem("Địa điểm", "/manager/places", "fa fa-map-marker", ""),
       new MenuItem(
-        this.l("RoleManagement"),
+        "Quản lý vai trò",
         "/manager/roles",
         "fas fa-user-tie",
         "Pages.Roles"
@@ -66,20 +66,20 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
         "Pages.Tenants"
       ),
       new MenuItem(
-        this.l("UserManagement"),
+        "Quản lý người dùng",
         "/manager/users",
         "fas fa-users",
         "Pages.Users"
       ),
       new MenuItem(
-        this.l("FileSystems"),
+        "Tệp tin hệ thống",
         "/manager/files",
         "fas fa-folder-open ",
         "Pages.Users"
       ),
-      new MenuItem(this.l("SiteConfig"), "", "fas fa-cogs", "", [
+      new MenuItem("Cấu hình trang", "", "fas fa-cogs", "", [
         new MenuItem(
-          this.l("BaseInfomation"),
+          "Thông tin cơ bản",
           "/manager/site-config/base-informations",
           "fab fa-affiliatetheme"
         ),

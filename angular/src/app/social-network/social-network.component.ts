@@ -41,11 +41,15 @@ export class SocialNetworkComponent extends AppComponentBase implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     const sidebar = document.querySelector("#main-aside");
+    const sidebarRight = document.querySelector("#main-aside-right");
     const header = document.querySelector("#main-header");
     const content = document.querySelector("#content-wrapper");
-    if (sidebar && header) {
+    if (sidebar && header && sidebarRight) {
       sidebar.removeAttribute("style");
       sidebar.setAttribute("style", `margin-top: ${header.clientHeight}px; margin-left: -0.5rem;`);
+
+      sidebarRight.removeAttribute("style");
+      sidebarRight.setAttribute("style", `margin-top: ${header.clientHeight}px;`);
 
       content.removeAttribute("style");
       content.setAttribute("style", `margin-top: ${header.clientHeight}px;`);

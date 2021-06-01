@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { CKEditorModule } from 'ckeditor4-angular';
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientJsonpModule } from "@angular/common/http";
@@ -59,6 +60,7 @@ import { SocialNetworkComponent } from './social-network/social-network.componen
 import { SocialHomeComponent } from './social-network/social-home/social-home.component';
 import { SocialHeaderComponent } from './layout/social-header/social-header.component';
 import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.component';
+import { SocialSidebarRightComponent } from './layout/social-sidebar-right/social-sidebar-right.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,7 @@ import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.c
     SocialHomeComponent,
     SocialHeaderComponent,
     SocialSidebarComponent,
+    SocialSidebarRightComponent,
   ],
   imports: [
     CommonModule,
@@ -126,6 +129,7 @@ import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.c
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyDGhuwAn_VTCeI1M5QQ0F30vi1stJgSNM8",
     }),
+    CKEditorModule
   ],
   providers: [],
   entryComponents: [
@@ -141,4 +145,4 @@ import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.c
     ResetPasswordDialogComponent,
   ],
 })
-export class AppModule {}
+export class AppModule { }

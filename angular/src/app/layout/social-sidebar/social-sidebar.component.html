@@ -3,75 +3,35 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat social-ul">
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']" [routerLinkActive]="['active']">
-                        <i class="nav-icon fas fa-home"></i>
+                    <a class="nav-link social-nav active">
+                        <i class="nav-icon {{selectedIcon}}"></i>
                         <p>
-                            Trang chủ
+                            {{selectedName}}
                         </p>
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
                     <div class="" style="height: 5px;">
-
                     </div>
                 </li>
-                <div class="bg-light-pink" style="margin-right: 18px;">
+                <div class="bg-light-pink">
                     <li class="nav-item social-special-topics">
                         <div class="nav-link social-nav text-center">
                             Chủ đề nổi bật
                         </div>
                     </li>
-                    <div class="spec-container" style="height: 156px; overflow-y: scroll;">
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
+                    <div class="spec-container">
+                        <li class="nav-item social-nav-li" *ngFor="let pc of postCategories">
+                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['news-feed',pc.slug]"
+                                [routerLinkActive]="['d-none']" (click)="changeMenuSelected(pc.name,'fa fa-star')">
                                 <i class="nav-icon fa fa-chevron-right"></i>
                                 <p>
-                                    Tất cả
+                                    {{pc.name}}
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
-                                <i class="nav-icon fa fa-chevron-right"></i>
-                                <p>
-                                    Tên chủ đề
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
-                                <i class="nav-icon fa fa-chevron-right"></i>
-                                <p>
-                                    Tên chủ đề
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
-                                <i class="nav-icon fa fa-chevron-right"></i>
-                                <p>
-                                    Tên chủ đề
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
-                                <i class="nav-icon fa fa-chevron-right"></i>
-                                <p>
-                                    Tên chủ đề
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
-                                <i class="nav-icon fa fa-chevron-right"></i>
-                                <p>
-                                    Tên chủ đề
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item social-nav-li">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['/']">
+                            <a class="nav-link social-nav special-nav-soc">
                                 <i class="nav-icon fa fa-arrows-alt"></i>
                                 <p>
                                     Xem thêm chủ đề
@@ -81,7 +41,17 @@
                     </div>
                 </div>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']">
+                    <a class="nav-link social-nav" [routerLink]="['/']" [routerLinkActive]="['d-none']"
+                        (click)="changeMenuSelected('Trang chủ','fas fa-home')">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Trang chủ
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item social-nav-li">
+                    <a class="nav-link social-nav" [routerLink]="['bang-xep-hang']" [routerLinkActive]="['d-none']"
+                        (click)="changeMenuSelected('Bảng xếp hạng','fa fa-cubes')">
                         <i class="nav-icon fa fa-cubes"></i>
                         <p>
                             Bảng xếp hạng
@@ -89,7 +59,8 @@
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']">
+                    <a class="nav-link social-nav" [routerLink]="['dia-diem']" [routerLinkActive]="['d-none']"
+                        (click)="changeMenuSelected('Địa điểm','fa fa-map')">
                         <i class="nav-icon fa fa-map"></i>
                         <p>
                             Địa điểm
@@ -97,7 +68,8 @@
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']">
+                    <a class="nav-link social-nav" [routerLink]="['yeu-thich']" [routerLinkActive]="['d-none']"
+                        (click)="changeMenuSelected('Yêu thích','fa fa-heart')">
                         <i class="nav-icon fa fa-heart"></i>
                         <p>
                             Yêu thích
@@ -105,7 +77,8 @@
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']">
+                    <a class="nav-link social-nav" [routerLink]="['bai-viet-da-luu']" [routerLinkActive]="['d-none']"
+                        (click)="changeMenuSelected('Bài viết đã lưu','fa fa-bookmark')">
                         <i class="nav-icon fa fa-bookmark"></i>
                         <p>
                             Bài viết đã lưu

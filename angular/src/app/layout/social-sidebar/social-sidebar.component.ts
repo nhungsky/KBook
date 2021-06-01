@@ -3,14 +3,17 @@ import {
   ChangeDetectionStrategy,
   Renderer2,
   OnInit,
-  Injector
+  Injector,
+  ChangeDetectorRef
 } from '@angular/core';
 import { NavigationEnd, PRIMARY_OUTLET, Router, RouterEvent } from '@angular/router';
 import { AppComponentBase } from '@shared/app-component-base';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
 import { MenuItem } from '@shared/layout/menu-item';
+import { PagedListingComponentBase, PagedRequestDto } from '@shared/paged-listing-component-base';
+import { PostCategoryDto, PostCategoryDtoPagedResultDto, PostCategoryServiceProxy, PostDto } from '@shared/service-proxies/service-proxies';
 import { BehaviorSubject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-social-sidebar',
@@ -18,20 +21,38 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./social-sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SocialSidebarComponent extends AppComponentBase implements OnInit {
+export class SocialSidebarComponent extends PagedListingComponentBase<PostDto> {
+  protected list(request: PagedRequestDto, pageNumber: number, finishedCallback: Function): void {
+  }
+  protected delete(entity: PostDto): void {
+    throw new Error('Method not implemented.');
+  }
   menuItems: MenuItem[];
   menuItemsMap: { [key: number]: MenuItem } = {};
   activatedMenuItems: MenuItem[] = [];
   routerEvents: BehaviorSubject<RouterEvent> = new BehaviorSubject(undefined);
-  homeRoute = "/app/about";
+  homeRoute = "/";
+
+  public postCategories: PostCategoryDto[] = [];
+  keyword = "";
+
+  selectedName = "Trang chủ";
+  selectedIcon = "fas fa-home";
+
+  changeMenuSelected(name, icon) {
+    this.selectedName = name;
+    this.selectedIcon = icon;
+  }
 
   constructor(injector: Injector, private router: Router, private renderer: Renderer2,
+    private _postCategoryService: PostCategoryServiceProxy,
+    private _cdr: ChangeDetectorRef,
     private _layoutStore: LayoutStoreService) {
     super(injector);
     this.router.events.subscribe(this.routerEvents);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.menuItems = this.getMenuItems();
     this.patchMenuItems(this.menuItems);
     this.routerEvents
@@ -44,6 +65,17 @@ export class SocialSidebarComponent extends AppComponentBase implements OnInit {
           this.activateMenuItems("/" + primaryUrlSegmentGroup.toString());
         }
       });
+
+    var postAz = await this._postCategoryService
+      .getAll("", 0, 5).toPromise();
+    this.postCategories = postAz.items;
+    this.changeStatus();
+  }
+
+  changeStatus(): void {
+    setTimeout(() => {
+      this._cdr.detectChanges()
+    }, 500);
   }
 
 

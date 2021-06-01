@@ -4,14 +4,16 @@ using ASPCore.Angular.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ASPCore.Angular.Migrations
 {
     [DbContext(typeof(AngularDbContext))]
-    partial class AngularDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210601042534_Change post and post category relation")]
+    partial class Changepostandpostcategoryrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

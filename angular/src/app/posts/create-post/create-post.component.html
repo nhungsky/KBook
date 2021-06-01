@@ -1,1 +1,75 @@
-<p>create-post works!</p>
+<form class="form-horizontal" autocomplete="off" #createPostCategory="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'Tạo bài viết mới'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="title">
+                Tiêu đề bài viết
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="title" id="title" required minlength="2" maxlength="255"
+                    [(ngModel)]="post.title" #titleModel="ngModel" #titleEl />
+                <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="postCategoryId">
+                Thuộc chủ đề
+            </label>
+            <div class="col-md-9">
+                <!-- postCategories -->
+                <select [(ngModel)]="post.postCategoryId" class="form-control" name="postCategoryId"
+                    id="postCategoryId">
+                    <option *ngFor="let c of postCategories" [ngValue]="c.id">{{c.name}}</option>
+                </select>
+                <!-- <input type="text" class="form-control" name="title" id="title" required minlength="2" maxlength="32"
+                    [(ngModel)]="post.title" #titleModel="ngModel" #titleEl />
+                <abp-validation-summary [control]="titleModel" [controlEl]="titleEl"></abp-validation-summary> -->
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="summary">
+                Tổng quan ngắn về bài viết
+            </label>
+            <div class="col-md-9">
+                <textarea type="text" class="form-control" name="summary" id="summary" [(ngModel)]="post.summary">
+                    </textarea>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="featureImage">
+                Đường dẫn hình ảnh
+            </label>
+            <div class="col-md-9">
+                <input type="url" class="form-control" name="featureImage" id="featureImage" required minlength="2"
+                    [(ngModel)]="post.featureImage" #featureImageModel="ngModel" #featureImageEl />
+                <abp-validation-summary [control]="featureImageModel" [controlEl]="featureImageEl">
+                </abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="tags">
+                Các thẻ
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="tags" id="tags" required minlength="2"
+                    [(ngModel)]="post.tags" #tagsModel="ngModel" #tagsEl />
+                <abp-validation-summary [control]="tagsModel" [controlEl]="tagsEl">
+                </abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row required">
+            <label class="col-md-12 col-form-label" for="tags">
+                Nội dung bài viết
+            </label>
+            <div class="col-md-12">
+                <ckeditor #editor [(ngModel)]="post.content" id="description" name="description" type="divarea">
+                </ckeditor>
+            </div>
+        </div>
+
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPostCategory.form.valid || saving"
+        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

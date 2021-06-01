@@ -186,7 +186,7 @@
     "universal-analytics" "0.4.23"
     "uuid" "8.3.2"
 
-"@angular/common@^11.0.2":
+"@angular/common@^11.0.2", "@angular/common@>=5.0.0":
   "integrity" "sha512-+bz/0TYzl/CiQCS1L2iwC7uiV+d+PnhvCs6scu66YKnBK2gSKxdypZZ3UZNbWDyYonAYmghEt+xHvKVpZgzhbw=="
   "resolved" "https://registry.npmjs.org/@angular/common/-/common-11.2.7.tgz"
   "version" "11.2.7"
@@ -226,7 +226,7 @@
   "resolved" "https://registry.npmjs.org/@angular/compiler/-/compiler-9.0.0.tgz"
   "version" "9.0.0"
 
-"@angular/core@^11.0.2":
+"@angular/core@^11.0.2", "@angular/core@>=5.0.0":
   "integrity" "sha512-d/d8mPh90eEs01eWzR2sNOD6aVsv69DCeYWDdNqABe+AnrE/xmNvggeAOMcREEwQB9e6liJgmHbMLktVaMhqyg=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-11.2.7.tgz"
   "version" "11.2.7"
@@ -238,7 +238,7 @@
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-9.0.0.tgz"
   "version" "9.0.0"
 
-"@angular/forms@^11.0.2":
+"@angular/forms@^11.0.2", "@angular/forms@>=5.0.0":
   "integrity" "sha512-MhNRZ0Su0z9Lof5wxJbaslIdEbG1C39RJ/xyeIm6+vZ5eCXnC3DqPuD4UIoWCgDQXFZW2pjdIePpLLYZnRNGRg=="
   "resolved" "https://registry.npmjs.org/@angular/forms/-/forms-11.2.7.tgz"
   "version" "11.2.7"
@@ -2477,6 +2477,21 @@
   "integrity" "sha512-7p4Kn/gffhQaavNfyDFg7LS5S/UT1JAjyGd4UqR2+jzoYF02eDkj0Ec3+48TsIa4zghjLY87nQHIh/ecK9qLdw=="
   "resolved" "https://registry.npmjs.org/circular-dependency-plugin/-/circular-dependency-plugin-5.2.0.tgz"
   "version" "5.2.0"
+
+"ckeditor4-angular@^2.2.1":
+  "integrity" "sha512-x/ndDhAJwRIQ6Q23HEAwY2V8ZTkSyluZjNqxOwtOI31rP1MXlW0dduBFkUnuru8D0i2rwhppkCKPUAM/K7OBKw=="
+  "resolved" "https://registry.npmjs.org/ckeditor4-angular/-/ckeditor4-angular-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "ckeditor4-integrations-common" "^0.2.0"
+    "tslib" "^2.0.0"
+
+"ckeditor4-integrations-common@^0.2.0":
+  "integrity" "sha512-KkHztF0bkGOnTcifWFd55j5Y9SCR3uk12SGgS6L1mZNnBeIJFCcgTwZWEHtG2aDJF7aZob7cex1CShL+SrNuow=="
+  "resolved" "https://registry.npmjs.org/ckeditor4-integrations-common/-/ckeditor4-integrations-common-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "load-script" "^1.0.0"
 
 "class-utils@^0.3.5":
   "integrity" "sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg=="
@@ -5490,6 +5505,11 @@
   "integrity" "sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA="
   "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.1.6.tgz"
   "version" "1.1.6"
+
+"load-script@^1.0.0":
+  "integrity" "sha1-BJGTngvuVkPuSUp+PaPSuscMbKQ="
+  "resolved" "https://registry.npmjs.org/load-script/-/load-script-1.0.0.tgz"
+  "version" "1.0.0"
 
 "loader-runner@^2.4.0":
   "integrity" "sha512-Jsmr89RcXGIwivFY21FcRrisYZfvLMTWx5kOLc+JTxtpBOG6xML0vzbc6SEQG2FO9/4Fc3wW4LVcB5DmGflaRw=="

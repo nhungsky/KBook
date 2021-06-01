@@ -27,7 +27,7 @@ class PagedPostCategoryRequestDto extends PagedRequestDto {
   styleUrls: ["./post-categories.component.css"],
   animations: [appModuleAnimation()],
 })
-export class PostCategoriesComponent extends PagedListingComponentBase<RoleDto> {
+export class PostCategoriesComponent extends PagedListingComponentBase<PostCategoryDto> {
   postCategories: PostCategoryDto[] = [];
   keyword = "";
 
@@ -59,9 +59,9 @@ export class PostCategoriesComponent extends PagedListingComponentBase<RoleDto> 
       });
   }
 
-  delete(role: RoleDto): void {
+  delete(role: PostCategoryDto): void {
     abp.message.confirm(
-      this.l("PostCategoryDeleteWarningMessage", role.displayName),
+      this.l("PostCategoryDeleteWarningMessage", role.name),
       undefined,
       (result: boolean) => {
         if (result) {
@@ -73,7 +73,7 @@ export class PostCategoriesComponent extends PagedListingComponentBase<RoleDto> 
                 this.refresh();
               })
             )
-            .subscribe(() => {});
+            .subscribe(() => { });
         }
       }
     );

@@ -4,9 +4,8 @@
     <div class="form-group">
       <div class="input-group">
         <input type="text" class="form-control" name="userNameOrEmailAddress"
-          [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress"
-          [placeholder]="'UserNameOrEmail' | localize" required maxlength="256" #userNameOrEmailAddressModel="ngModel"
-          #userNameOrEmailAddressEl />
+          [(ngModel)]="authService.authenticateModel.userNameOrEmailAddress" placeholder="Tên đăng nhập" required
+          maxlength="256" #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl />
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-user"></span>
@@ -19,7 +18,7 @@
     <div class="form-group">
       <div class="input-group">
         <input type="password" class="form-control" name="password" [(ngModel)]="authService.authenticateModel.password"
-          [placeholder]="'Password' | localize" required maxlength="32" #passwordModel="ngModel" #passwordEl />
+        placeholder="Mật khẩu" required maxlength="32" #passwordModel="ngModel" #passwordEl />
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-lock"></span>
@@ -29,7 +28,7 @@
       <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
     </div>
     <div class="form-group row">
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe"
             [(ngModel)]="authService.rememberMe" />
@@ -38,7 +37,7 @@
           </label>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-5">
         <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
           Đăng nhập
         </button>
