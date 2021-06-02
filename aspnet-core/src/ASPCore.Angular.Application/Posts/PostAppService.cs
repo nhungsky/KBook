@@ -106,7 +106,7 @@ namespace ASPCore.Angular.Posts
                     .GetAllList(x => x.PostId == result.Items[i].Id).Take(3).ToList());
                 // Đếm số sao
                 result.Items[i].PostRatingCount = PostRatingRepository.Count(x => x.PostId == result.Items[i].Id);
-                // Tính số sao trungg bình
+                // Tính số sao trung bình
                 result.Items[i].PostRatingAvrg = PostRatingRepository
                     .GetAllList(x => x.PostId == result.Items[i].Id).Average(x => x.Rating);
             }
