@@ -231,3 +231,6 @@
         text-align: center;
         display: block;
     }
+    .menu-user-z {
+        z-index: 1039;
+    }
