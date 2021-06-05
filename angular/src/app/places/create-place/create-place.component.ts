@@ -20,6 +20,7 @@ import {
   PlaceServiceProxy,
   API_BASE_URL,
   FileParameter,
+  AppFileServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { forEach as _forEach, map as _map } from "lodash-es";
 import { MapsAPILoader } from "@agm/core";
@@ -52,22 +53,23 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
     var currentFile = files.item(0);
     this.pickedFiles[index] = currentFile;
     this.imgPreviews[index] = URL.createObjectURL(currentFile);
-    // let fileParameter: FileParameter = {
-    //   fileName: currentFile.name,
-    //   data: currentFile,
-    // };
-    // this._appFileService
-    //   .uploadFile(fileParameter)
-    //   .pipe()
-    //   .subscribe(
-    //     (fileInfo) => {
-    //       abp.notify.success(this.l("SuccessfullyUploaded"));
-    //       this.refresh();
-    //     },
-    //     (err) => {
-    //       abp.notify.error(this.l("FileUploadFailed"));
-    //     }
-    //   );
+  }
+
+  async syncFiles() {
+    for (let i = 0; i < this.pickedFiles.length; i++) {
+      const file = this.pickedFiles[i];
+      let fileParameter: FileParameter = {
+        fileName: file.name,
+        data: file,
+      };
+      var result = await this.appFileService
+        .uploadFile(fileParameter).toPromise();
+      try {
+        console.log(result);
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
   getImagePreview(index) {
@@ -101,6 +103,7 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private _placeService: PlaceServiceProxy,
     public bsModalRef: BsModalRef,
+    private appFileService: AppFileServiceProxy,
     @Inject(API_BASE_URL) baseUrl?: string
   ) {
     super(injector);
@@ -130,9 +133,9 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
     }
   }
 
-  save(): void {
+  async save() {
     this.saving = true;
-
+    await this.syncFiles();
     this._placeService
       .create(this.place)
       .pipe(
