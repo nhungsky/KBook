@@ -39,7 +39,7 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
 
   latitude = 0.0;
   longitude = 0.0;
-  zoom: number;
+  zoom: number = 18;
   type = "roadmap";
   pickedFiles: File[] = [null, null, null];
   imgPreviews = ["", "", ""];
