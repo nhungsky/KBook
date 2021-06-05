@@ -26,6 +26,11 @@ import { PlaceCategoriesComponent } from "./place-categories/place-categories.co
         component: AppComponent,
         children: [
           {
+            path: "",
+            redirectTo: "home",
+            pathMatch: 'full'
+          },
+          {
             path: "home",
             component: HomeComponent,
             canActivate: [AppRouteGuard],

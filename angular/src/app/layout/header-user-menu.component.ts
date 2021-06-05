@@ -5,6 +5,7 @@ import {
   Inject,
   Optional,
   Injector,
+  ChangeDetectorRef,
 } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import { AppAuthService } from "@shared/auth/app-auth.service";
@@ -30,6 +31,7 @@ export class HeaderUserMenuComponent
   constructor(
     injector: Injector,
     private _userService: UserServiceProxy,
+    private _cdr: ChangeDetectorRef,
     private _authService: AppAuthService,
     @Optional() @Inject(API_BASE_URL) baseUrl?: string
   ) {
@@ -39,6 +41,12 @@ export class HeaderUserMenuComponent
 
   logout(): void {
     this._authService.logout();
+  }
+
+  changeStatus(): void {
+    setTimeout(() => {
+      this._cdr.detectChanges()
+    }, 500);
   }
 
   ngOnInit() {
@@ -52,6 +60,7 @@ export class HeaderUserMenuComponent
           this.currentUserAvatar = this.appBaseUrl + user.photo;
         }
         this.currentUserName = user.fullName;
+        this.changeStatus();
       });
   }
 }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using ASPCore.Angular.Application.PlaceCategories.Dto;
@@ -10,6 +11,10 @@ namespace ASPCore.Angular.Application.PlaceCategories
         public PlaceCategoryAppService(IRepository<PlaceCategory> repo) : base(repo)
         {
 
+        }
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync(x => x.IsActive);
         }
     }
 }

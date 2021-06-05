@@ -18,6 +18,10 @@ import {
   PostCategoryServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { forEach as _forEach, map as _map } from "lodash-es";
+
+declare function showLoading(): any;
+declare function hideLoading(): any;
+
 @Component({
   selector: "app-create-post-category",
   templateUrl: "./create-post-category.component.html",
@@ -48,7 +52,7 @@ export class CreatePostCategoryComponent
     this.postCategory.slug = slug;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save(): void {
     this.saving = true;

@@ -15,5 +15,7 @@ namespace ASPCore.Angular.Posts
         public Task Approval(int id);
         public PagedResultDto<PostListDto> GetListSimple(PagedPostResultRequestDto input);
         public PagedResultDto<PostDisplayDto> GetPostsLanding(PagedPostResultRequestDto inpt);
+
+        public Task<int> Count();
     }
 }

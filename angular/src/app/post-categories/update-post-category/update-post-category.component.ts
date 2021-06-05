@@ -24,6 +24,9 @@ import {
   PostCategoryServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 
+declare function showLoading(): any;
+declare function hideLoading(): any;
+
 @Component({
   selector: "app-update-post-category",
   templateUrl: "./update-post-category.component.html",
@@ -55,12 +58,11 @@ export class UpdatePostCategoryComponent
     this.postCategory.slug = slug;
   }
 
-  ngOnInit(): void {
-    this._postCategoryService
-      .get(this.id)
-      .subscribe((result: PostCategoryDto) => {
-        this.postCategory = result;
-      });
+  async ngOnInit() {
+    showLoading();
+    this.postCategory = await this._postCategoryService
+      .get(this.id).toPromise();
+    hideLoading();
   }
   save(): void {
     this.saving = true;

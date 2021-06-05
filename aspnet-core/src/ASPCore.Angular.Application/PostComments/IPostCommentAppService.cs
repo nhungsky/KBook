@@ -10,5 +10,6 @@ namespace ASPCore.Angular.PostComments
 {
     public interface IPostCommentAppService : IAsyncCrudAppService<PostCommentDto>
     {
+        public Task<int> Count();
     }
 }

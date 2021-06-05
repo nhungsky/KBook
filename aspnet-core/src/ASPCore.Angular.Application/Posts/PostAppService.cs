@@ -112,5 +112,10 @@ namespace ASPCore.Angular.Posts
             }
             return result;
         }
+
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync(x => x.IsActive && !x.IsDeleted);
+        }
     }
 }

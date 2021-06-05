@@ -14,5 +14,7 @@ namespace ASPCore.Angular.Users
         Task ChangeLanguage(ChangeUserLanguageDto input);
 
         Task<bool> ChangePassword(ChangePasswordDto input);
+
+        public Task<int> Count();
     }
 }

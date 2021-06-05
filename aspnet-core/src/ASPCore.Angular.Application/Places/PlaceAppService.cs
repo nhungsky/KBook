@@ -16,7 +16,7 @@ namespace ASPCore.Angular.Places
         protected override IQueryable<Place> CreateFilteredQuery(PagedPlaceResultRequestDto input)
         {
             return base.CreateFilteredQuery(input)
-                .Where(x=> (input.Keyword == null || input.Keyword.Length == 0 || x.Name.Contains(input.Keyword)) &&
+                .Where(x => (input.Keyword == null || input.Keyword.Length == 0 || x.Name.Contains(input.Keyword)) &&
                     (input.IsActive == null || x.IsActive == input.IsActive));
         }
 
@@ -36,6 +36,10 @@ namespace ASPCore.Angular.Places
                 return;
             current.IsActive = false;
             await Repository.UpdateAsync(current);
+        }
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync(x => x.IsActive);
         }
     }
 }

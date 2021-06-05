@@ -15,5 +15,9 @@ namespace ASPCore.Angular.PostRatings
         {
 
         }
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync();
+        }
     }
 }

@@ -9,17 +9,15 @@ import { finalize } from "rxjs/operators";
 import { BsModalRef } from "ngx-bootstrap/modal";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  RoleServiceProxy,
-  RoleDto,
-  PermissionDto,
-  CreateRoleDto,
-  PermissionDtoListResultDto,
   PostCategoryDto,
   PostCategoryServiceProxy,
   PostDto,
   PostServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { forEach as _forEach, map as _map } from "lodash-es";
+
+declare function showLoading(): any;
+declare function hideLoading(): any;
 
 @Component({
   selector: 'app-create-post',
@@ -46,8 +44,10 @@ export class CreatePostComponent extends AppComponentBase
   }
 
   async ngOnInit() {
+    showLoading();
     var postCategoryRequestResult = await this._postCategoryService.getAll("", 0, 1000).toPromise();
     this.postCategories = postCategoryRequestResult.items;
+    hideLoading();
   }
 
   save(): void {
@@ -55,7 +55,7 @@ export class CreatePostComponent extends AppComponentBase
 
     this.post.isActive = true;
     this.post.isDeleted = false;
-    
+
     this._postService
       .create(this.post)
       .pipe(

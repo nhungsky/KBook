@@ -10,5 +10,6 @@ namespace ASPCore.Angular.PostRatings
 {
     public interface IPostRatingAppService : IAsyncCrudAppService<PostRatingDto>
     {
+        public Task<int> Count();
     }
 }

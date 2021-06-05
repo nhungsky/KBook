@@ -12,5 +12,6 @@ namespace ASPCore.Angular.Places
     {
         public Task NotApproved(int id);
         public Task Approval(int id);
+        public Task<int> Count();
     }
 }

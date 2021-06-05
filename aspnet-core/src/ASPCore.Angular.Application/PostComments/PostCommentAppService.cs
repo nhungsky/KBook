@@ -12,5 +12,9 @@ namespace ASPCore.Angular.PostComments
     public class PostCommentAppService : AsyncCrudAppService<PostComment, PostCommentDto>, IPostCommentAppService
     {
         public PostCommentAppService(IRepository<PostComment> repo) : base(repo) { }
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync();
+        }
     }
 }

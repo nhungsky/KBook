@@ -12,5 +12,9 @@ namespace ASPCore.Angular.PostCategories
     public class PostCategoryAppService : AsyncCrudAppService<PostCategory, PostCategoryDto, int, PagedPostCategoryResultRequestDto>, IPostCategoryAppService
     {
         public PostCategoryAppService(IRepository<PostCategory> repo) : base(repo) { }
+        public async Task<int> Count()
+        {
+            return await Repository.CountAsync();
+        }
     }
 }
