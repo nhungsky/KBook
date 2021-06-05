@@ -55,6 +55,7 @@ export class CreatePostComponent extends AppComponentBase
 
     this.post.isActive = true;
     this.post.isDeleted = false;
+    
     this._postService
       .create(this.post)
       .pipe(

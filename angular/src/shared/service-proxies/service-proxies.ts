@@ -1016,6 +1016,305 @@ export class PlaceServiceProxy {
 }
 
 @Injectable()
+export class PlaceCategoryServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    get(id: number | undefined): Observable<PlaceCategoryDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaceCategory/Get?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaceCategoryDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaceCategoryDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<PlaceCategoryDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaceCategoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaceCategoryDto>(<any>null);
+    }
+
+    /**
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PlaceCategoryDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaceCategory/GetAll?";
+        if (keyword !== undefined && keyword !== null)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (isActive !== undefined && isActive !== null)
+            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaceCategoryDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaceCategoryDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PlaceCategoryDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaceCategoryDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaceCategoryDtoPagedResultDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    create(body: PlaceCategoryDto | undefined): Observable<PlaceCategoryDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaceCategory/Create";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaceCategoryDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaceCategoryDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<PlaceCategoryDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaceCategoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaceCategoryDto>(<any>null);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    update(body: PlaceCategoryDto | undefined): Observable<PlaceCategoryDto> {
+        let url_ = this.baseUrl + "/api/services/app/PlaceCategory/Update";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json-patch+json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<PlaceCategoryDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PlaceCategoryDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<PlaceCategoryDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PlaceCategoryDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PlaceCategoryDto>(<any>null);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/PlaceCategory/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+}
+
+@Injectable()
 export class PostServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -1081,16 +1380,19 @@ export class PostServiceProxy {
     /**
      * @param keyword (optional) 
      * @param isActive (optional) 
+     * @param postCategoryId (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getListSimple(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PostListDtoPagedResultDto> {
+    getListSimple(keyword: string | null | undefined, isActive: boolean | null | undefined, postCategoryId: number | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PostListDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Post/GetListSimple?";
         if (keyword !== undefined && keyword !== null)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (isActive !== undefined && isActive !== null)
             url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (postCategoryId !== undefined && postCategoryId !== null)
+            url_ += "PostCategoryId=" + encodeURIComponent("" + postCategoryId) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -1198,6 +1500,76 @@ export class PostServiceProxy {
     }
 
     /**
+     * @param keyword (optional) 
+     * @param isActive (optional) 
+     * @param postCategoryId (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getPostsLanding(keyword: string | null | undefined, isActive: boolean | null | undefined, postCategoryId: number | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PostDisplayDtoPagedResultDto> {
+        let url_ = this.baseUrl + "/api/services/app/Post/GetPostsLanding?";
+        if (keyword !== undefined && keyword !== null)
+            url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
+        if (isActive !== undefined && isActive !== null)
+            url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (postCategoryId !== undefined && postCategoryId !== null)
+            url_ += "PostCategoryId=" + encodeURIComponent("" + postCategoryId) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetPostsLanding(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetPostsLanding(<any>response_);
+                } catch (e) {
+                    return <Observable<PostDisplayDtoPagedResultDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PostDisplayDtoPagedResultDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetPostsLanding(response: HttpResponseBase): Observable<PostDisplayDtoPagedResultDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PostDisplayDtoPagedResultDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PostDisplayDtoPagedResultDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -1256,16 +1628,19 @@ export class PostServiceProxy {
     /**
      * @param keyword (optional) 
      * @param isActive (optional) 
+     * @param postCategoryId (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PostDtoPagedResultDto> {
+    getAll(keyword: string | null | undefined, isActive: boolean | null | undefined, postCategoryId: number | null | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PostDtoPagedResultDto> {
         let url_ = this.baseUrl + "/api/services/app/Post/GetAll?";
         if (keyword !== undefined && keyword !== null)
             url_ += "Keyword=" + encodeURIComponent("" + keyword) + "&";
         if (isActive !== undefined && isActive !== null)
             url_ += "IsActive=" + encodeURIComponent("" + isActive) + "&";
+        if (postCategoryId !== undefined && postCategoryId !== null)
+            url_ += "PostCategoryId=" + encodeURIComponent("" + postCategoryId) + "&";
         if (skipCount === null)
             throw new Error("The parameter 'skipCount' cannot be null.");
         else if (skipCount !== undefined)
@@ -4367,6 +4742,7 @@ export class PlaceDto implements IPlaceDto {
     description: string | undefined;
     latitude: number;
     longitude: number;
+    placeCategoryId: number;
     isActive: boolean;
     id: number;
 
@@ -4387,6 +4763,7 @@ export class PlaceDto implements IPlaceDto {
             this.description = _data["description"];
             this.latitude = _data["latitude"];
             this.longitude = _data["longitude"];
+            this.placeCategoryId = _data["placeCategoryId"];
             this.isActive = _data["isActive"];
             this.id = _data["id"];
         }
@@ -4407,6 +4784,7 @@ export class PlaceDto implements IPlaceDto {
         data["description"] = this.description;
         data["latitude"] = this.latitude;
         data["longitude"] = this.longitude;
+        data["placeCategoryId"] = this.placeCategoryId;
         data["isActive"] = this.isActive;
         data["id"] = this.id;
         return data; 
@@ -4427,6 +4805,7 @@ export interface IPlaceDto {
     description: string | undefined;
     latitude: number;
     longitude: number;
+    placeCategoryId: number;
     isActive: boolean;
     id: number;
 }
@@ -4484,6 +4863,116 @@ export class PlaceDtoPagedResultDto implements IPlaceDtoPagedResultDto {
 export interface IPlaceDtoPagedResultDto {
     totalCount: number;
     items: PlaceDto[] | undefined;
+}
+
+export class PlaceCategoryDto implements IPlaceCategoryDto {
+    name: string | undefined;
+    featureImage: string | undefined;
+    isActive: boolean;
+    id: number;
+
+    constructor(data?: IPlaceCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.featureImage = _data["featureImage"];
+            this.isActive = _data["isActive"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PlaceCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaceCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["featureImage"] = this.featureImage;
+        data["isActive"] = this.isActive;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PlaceCategoryDto {
+        const json = this.toJSON();
+        let result = new PlaceCategoryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaceCategoryDto {
+    name: string | undefined;
+    featureImage: string | undefined;
+    isActive: boolean;
+    id: number;
+}
+
+export class PlaceCategoryDtoPagedResultDto implements IPlaceCategoryDtoPagedResultDto {
+    totalCount: number;
+    items: PlaceCategoryDto[] | undefined;
+
+    constructor(data?: IPlaceCategoryDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PlaceCategoryDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PlaceCategoryDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PlaceCategoryDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PlaceCategoryDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new PlaceCategoryDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPlaceCategoryDtoPagedResultDto {
+    totalCount: number;
+    items: PlaceCategoryDto[] | undefined;
 }
 
 export class PostListDto implements IPostListDto {
@@ -4602,6 +5091,400 @@ export class PostListDtoPagedResultDto implements IPostListDtoPagedResultDto {
 export interface IPostListDtoPagedResultDto {
     totalCount: number;
     items: PostListDto[] | undefined;
+}
+
+export enum Genders {
+    _0 = 0,
+    _1 = 1,
+    _2 = 2,
+    _3 = 3,
+}
+
+export class UserDto implements IUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    id: number;
+
+    constructor(data?: IUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userName = _data["userName"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.emailAddress = _data["emailAddress"];
+            this.isActive = _data["isActive"];
+            this.fullName = _data["fullName"];
+            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames.push(item);
+            }
+            this.lockReason = _data["lockReason"];
+            this.photo = _data["photo"];
+            this.address = _data["address"];
+            this.biography = _data["biography"];
+            this.gender = _data["gender"];
+            this.birthday = _data["birthday"] ? moment(_data["birthday"].toString()) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): UserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["emailAddress"] = this.emailAddress;
+        data["isActive"] = this.isActive;
+        data["fullName"] = this.fullName;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        data["lockReason"] = this.lockReason;
+        data["photo"] = this.photo;
+        data["address"] = this.address;
+        data["biography"] = this.biography;
+        data["gender"] = this.gender;
+        data["birthday"] = this.birthday ? this.birthday.toISOString() : <any>undefined;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): UserDto {
+        const json = this.toJSON();
+        let result = new UserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    id: number;
+}
+
+export class PostCategoryDto implements IPostCategoryDto {
+    name: string;
+    slug: string;
+    description: string | undefined;
+    id: number;
+
+    constructor(data?: IPostCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.slug = _data["slug"];
+            this.description = _data["description"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PostCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["slug"] = this.slug;
+        data["description"] = this.description;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PostCategoryDto {
+        const json = this.toJSON();
+        let result = new PostCategoryDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPostCategoryDto {
+    name: string;
+    slug: string;
+    description: string | undefined;
+    id: number;
+}
+
+export class PostCommentDto implements IPostCommentDto {
+    postId: number;
+    imagePath: string | undefined;
+    comment: string | undefined;
+    id: number;
+
+    constructor(data?: IPostCommentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.postId = _data["postId"];
+            this.imagePath = _data["imagePath"];
+            this.comment = _data["comment"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PostCommentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostCommentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["postId"] = this.postId;
+        data["imagePath"] = this.imagePath;
+        data["comment"] = this.comment;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PostCommentDto {
+        const json = this.toJSON();
+        let result = new PostCommentDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPostCommentDto {
+    postId: number;
+    imagePath: string | undefined;
+    comment: string | undefined;
+    id: number;
+}
+
+export class PostDisplayDto implements IPostDisplayDto {
+    title: string | undefined;
+    postCategoryId: number;
+    summary: string | undefined;
+    featureImage: string | undefined;
+    tags: string | undefined;
+    postRatingAvrg: number;
+    postRatingCount: number;
+    postCommentCount: number;
+    creator: UserDto;
+    postCategory: PostCategoryDto;
+    latestSomeComments: PostCommentDto[] | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+
+    constructor(data?: IPostDisplayDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.postCategoryId = _data["postCategoryId"];
+            this.summary = _data["summary"];
+            this.featureImage = _data["featureImage"];
+            this.tags = _data["tags"];
+            this.postRatingAvrg = _data["postRatingAvrg"];
+            this.postRatingCount = _data["postRatingCount"];
+            this.postCommentCount = _data["postCommentCount"];
+            this.creator = _data["creator"] ? UserDto.fromJS(_data["creator"]) : <any>undefined;
+            this.postCategory = _data["postCategory"] ? PostCategoryDto.fromJS(_data["postCategory"]) : <any>undefined;
+            if (Array.isArray(_data["latestSomeComments"])) {
+                this.latestSomeComments = [] as any;
+                for (let item of _data["latestSomeComments"])
+                    this.latestSomeComments.push(PostCommentDto.fromJS(item));
+            }
+            this.lastModificationTime = _data["lastModificationTime"] ? moment(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.lastModifierUserId = _data["lastModifierUserId"];
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            this.creatorUserId = _data["creatorUserId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): PostDisplayDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostDisplayDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["postCategoryId"] = this.postCategoryId;
+        data["summary"] = this.summary;
+        data["featureImage"] = this.featureImage;
+        data["tags"] = this.tags;
+        data["postRatingAvrg"] = this.postRatingAvrg;
+        data["postRatingCount"] = this.postRatingCount;
+        data["postCommentCount"] = this.postCommentCount;
+        data["creator"] = this.creator ? this.creator.toJSON() : <any>undefined;
+        data["postCategory"] = this.postCategory ? this.postCategory.toJSON() : <any>undefined;
+        if (Array.isArray(this.latestSomeComments)) {
+            data["latestSomeComments"] = [];
+            for (let item of this.latestSomeComments)
+                data["latestSomeComments"].push(item.toJSON());
+        }
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toISOString() : <any>undefined;
+        data["lastModifierUserId"] = this.lastModifierUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): PostDisplayDto {
+        const json = this.toJSON();
+        let result = new PostDisplayDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPostDisplayDto {
+    title: string | undefined;
+    postCategoryId: number;
+    summary: string | undefined;
+    featureImage: string | undefined;
+    tags: string | undefined;
+    postRatingAvrg: number;
+    postRatingCount: number;
+    postCommentCount: number;
+    creator: UserDto;
+    postCategory: PostCategoryDto;
+    latestSomeComments: PostCommentDto[] | undefined;
+    lastModificationTime: moment.Moment | undefined;
+    lastModifierUserId: number | undefined;
+    creationTime: moment.Moment;
+    creatorUserId: number | undefined;
+    id: number;
+}
+
+export class PostDisplayDtoPagedResultDto implements IPostDisplayDtoPagedResultDto {
+    totalCount: number;
+    items: PostDisplayDto[] | undefined;
+
+    constructor(data?: IPostDisplayDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(PostDisplayDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PostDisplayDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostDisplayDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): PostDisplayDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new PostDisplayDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IPostDisplayDtoPagedResultDto {
+    totalCount: number;
+    items: PostDisplayDto[] | undefined;
 }
 
 export class PostDto implements IPostDto {
@@ -4734,61 +5617,6 @@ export interface IPostDtoPagedResultDto {
     items: PostDto[] | undefined;
 }
 
-export class PostCategoryDto implements IPostCategoryDto {
-    name: string;
-    slug: string;
-    description: string | undefined;
-    id: number;
-
-    constructor(data?: IPostCategoryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-            this.slug = _data["slug"];
-            this.description = _data["description"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): PostCategoryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PostCategoryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["slug"] = this.slug;
-        data["description"] = this.description;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PostCategoryDto {
-        const json = this.toJSON();
-        let result = new PostCategoryDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPostCategoryDto {
-    name: string;
-    slug: string;
-    description: string | undefined;
-    id: number;
-}
-
 export class PostCategoryDtoPagedResultDto implements IPostCategoryDtoPagedResultDto {
     totalCount: number;
     items: PostCategoryDto[] | undefined;
@@ -4842,61 +5670,6 @@ export class PostCategoryDtoPagedResultDto implements IPostCategoryDtoPagedResul
 export interface IPostCategoryDtoPagedResultDto {
     totalCount: number;
     items: PostCategoryDto[] | undefined;
-}
-
-export class PostCommentDto implements IPostCommentDto {
-    postId: number;
-    imagePath: string | undefined;
-    comment: string | undefined;
-    id: number;
-
-    constructor(data?: IPostCommentDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.postId = _data["postId"];
-            this.imagePath = _data["imagePath"];
-            this.comment = _data["comment"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): PostCommentDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PostCommentDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["postId"] = this.postId;
-        data["imagePath"] = this.imagePath;
-        data["comment"] = this.comment;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): PostCommentDto {
-        const json = this.toJSON();
-        let result = new PostCommentDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IPostCommentDto {
-    postId: number;
-    imagePath: string | undefined;
-    comment: string | undefined;
-    id: number;
 }
 
 export class PostCommentDtoPagedResultDto implements IPostCommentDtoPagedResultDto {
@@ -6302,13 +7075,6 @@ export interface IExternalAuthenticateResultModel {
     waitingForActivation: boolean;
 }
 
-export enum Genders {
-    _0 = 0,
-    _1 = 1,
-    _2 = 2,
-    _3 = 3,
-}
-
 export class CreateUserDto implements ICreateUserDto {
     userName: string;
     name: string;
@@ -6406,117 +7172,6 @@ export interface ICreateUserDto {
     biography: string | undefined;
     gender: Genders;
     birthday: moment.Moment | undefined;
-}
-
-export class UserDto implements IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment;
-    roleNames: string[] | undefined;
-    lockReason: string | undefined;
-    photo: string | undefined;
-    address: string | undefined;
-    biography: string | undefined;
-    gender: Genders;
-    birthday: moment.Moment | undefined;
-    id: number;
-
-    constructor(data?: IUserDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.userName = _data["userName"];
-            this.name = _data["name"];
-            this.surname = _data["surname"];
-            this.emailAddress = _data["emailAddress"];
-            this.isActive = _data["isActive"];
-            this.fullName = _data["fullName"];
-            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
-            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
-            if (Array.isArray(_data["roleNames"])) {
-                this.roleNames = [] as any;
-                for (let item of _data["roleNames"])
-                    this.roleNames.push(item);
-            }
-            this.lockReason = _data["lockReason"];
-            this.photo = _data["photo"];
-            this.address = _data["address"];
-            this.biography = _data["biography"];
-            this.gender = _data["gender"];
-            this.birthday = _data["birthday"] ? moment(_data["birthday"].toString()) : <any>undefined;
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): UserDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["userName"] = this.userName;
-        data["name"] = this.name;
-        data["surname"] = this.surname;
-        data["emailAddress"] = this.emailAddress;
-        data["isActive"] = this.isActive;
-        data["fullName"] = this.fullName;
-        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
-        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
-        if (Array.isArray(this.roleNames)) {
-            data["roleNames"] = [];
-            for (let item of this.roleNames)
-                data["roleNames"].push(item);
-        }
-        data["lockReason"] = this.lockReason;
-        data["photo"] = this.photo;
-        data["address"] = this.address;
-        data["biography"] = this.biography;
-        data["gender"] = this.gender;
-        data["birthday"] = this.birthday ? this.birthday.toISOString() : <any>undefined;
-        data["id"] = this.id;
-        return data; 
-    }
-
-    clone(): UserDto {
-        const json = this.toJSON();
-        let result = new UserDto();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IUserDto {
-    userName: string;
-    name: string;
-    surname: string;
-    emailAddress: string;
-    isActive: boolean;
-    fullName: string | undefined;
-    lastLoginTime: moment.Moment | undefined;
-    creationTime: moment.Moment;
-    roleNames: string[] | undefined;
-    lockReason: string | undefined;
-    photo: string | undefined;
-    address: string | undefined;
-    biography: string | undefined;
-    gender: Genders;
-    birthday: moment.Moment | undefined;
-    id: number;
 }
 
 export class Int64EntityDto implements IInt64EntityDto {

@@ -8,10 +8,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/x-icon" href="assets/img/logo.png" id="favicon" />
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/vistark/css/loading.css" />
 </head>
 
 <body class="hold-transition">
   <app-root></app-root>
+  <div class="loading d-none" id="loading-140398-ahihi-hehe">Loading&#8230;</div>
+  <script>
+    function showLoading() {
+      document.querySelector("#loading-140398-ahihi-hehe").classList.remove(["d-none"]);
+    }
+
+    function hideLoading() {
+      document.querySelector("#loading-140398-ahihi-hehe").classList.add(["d-none"]);
+    }
+  </script>
 </body>
 
 </html>

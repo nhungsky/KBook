@@ -301,6 +301,27 @@ namespace ASPCore.Angular.Migrations
                     b.ToTable("AbpTenants");
                 });
 
+            modelBuilder.Entity("ASPCore.Angular.PlaceCategories.PlaceCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("FeatureImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlaceCategories");
+                });
+
             modelBuilder.Entity("ASPCore.Angular.Places.Place", b =>
                 {
                     b.Property<int>("Id")
@@ -329,7 +350,12 @@ namespace ASPCore.Angular.Migrations
                     b.Property<string>("Photos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlaceCategoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PlaceCategoryId");
 
                     b.ToTable("Places");
                 });
@@ -1897,6 +1923,17 @@ namespace ASPCore.Angular.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("ASPCore.Angular.Places.Place", b =>
+                {
+                    b.HasOne("ASPCore.Angular.PlaceCategories.PlaceCategory", "PlaceCategory")
+                        .WithMany("Places")
+                        .HasForeignKey("PlaceCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlaceCategory");
+                });
+
             modelBuilder.Entity("ASPCore.Angular.Posts.Post", b =>
                 {
                     b.HasOne("ASPCore.Angular.PostCategories.PostCategory", "PostCategory")
@@ -2080,6 +2117,11 @@ namespace ASPCore.Angular.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
+                });
+
+            modelBuilder.Entity("ASPCore.Angular.PlaceCategories.PlaceCategory", b =>
+                {
+                    b.Navigation("Places");
                 });
 
             modelBuilder.Entity("ASPCore.Angular.PostCategories.PostCategory", b =>

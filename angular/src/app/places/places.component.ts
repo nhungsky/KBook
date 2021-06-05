@@ -82,18 +82,18 @@ export class PlacesComponent extends PagedListingComponentBase<RoleDto> {
                 this.refresh();
               })
             )
-            .subscribe(() => {});
+            .subscribe(() => { });
         }
       }
     );
   }
 
-  createRole(): void {
+  createPlace(): void {
     this.showCreateOrEditRoleDialog();
   }
 
-  editRole(role: RoleDto): void {
-    this.showCreateOrEditRoleDialog(role.id);
+  editPlace(place: PlaceDto): void {
+    this.showCreateOrEditRoleDialog(place.id);
   }
 
   showCreateOrEditRoleDialog(id?: number): void {

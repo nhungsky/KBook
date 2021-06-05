@@ -21,6 +21,8 @@ import {
   API_BASE_URL,
   FileParameter,
   AppFileServiceProxy,
+  PlaceCategoryDto,
+  PlaceCategoryServiceProxy,
 } from "@shared/service-proxies/service-proxies";
 import { forEach as _forEach, map as _map } from "lodash-es";
 import { MapsAPILoader } from "@agm/core";
@@ -33,6 +35,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 })
 export class CreatePlaceComponent extends AppComponentBase implements OnInit {
   public appBaseUrl = "";
+  placeCategories: PlaceCategoryDto[] = [];
 
   latitude = 0.0;
   longitude = 0.0;
@@ -56,8 +59,11 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
   }
 
   async syncFiles() {
+    var photos = [];
     for (let i = 0; i < this.pickedFiles.length; i++) {
       const file = this.pickedFiles[i];
+      if (!file)
+        continue;
       let fileParameter: FileParameter = {
         fileName: file.name,
         data: file,
@@ -65,25 +71,18 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
       var result = await this.appFileService
         .uploadFile(fileParameter).toPromise();
       try {
-        console.log(result);
+        photos.push(result.fullName);
       } catch (e) {
-        console.log(e);
       }
     }
+
+    this.place.photos = JSON.stringify(photos);
   }
 
   getImagePreview(index) {
     if (this.imgPreviews[index] && this.imgPreviews[index].length > 0) {
-      console.log(this.imgPreviews[index]);
       return this.sanitizer.bypassSecurityTrustUrl(this.imgPreviews[index]);
     } else {
-      if (this.place.photos) {
-        var photos = JSON.parse(this.place.photos);
-        if (index < photos.length) {
-          return this.appBaseUrl + photos[photos.length];
-        }
-      }
-
       return this.appBaseUrl + abp.setting.get("IMAGE_HOLDER");
     }
   }
@@ -102,6 +101,7 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
     private sanitizer: DomSanitizer,
     private mapsAPILoader: MapsAPILoader,
     private _placeService: PlaceServiceProxy,
+    public placeCategoryService: PlaceCategoryServiceProxy,
     public bsModalRef: BsModalRef,
     private appFileService: AppFileServiceProxy,
     @Inject(API_BASE_URL) baseUrl?: string
@@ -117,10 +117,19 @@ export class CreatePlaceComponent extends AppComponentBase implements OnInit {
     this.place.longitude = e.lng;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
     });
+    var res = await this.placeCategoryService.getAll("", true, 0, 1000).toPromise();
+    if (res.totalCount > 0 && res.items && res.items.length > 0) {
+      this.placeCategories = res.items;
+    }
+  }
+
+  removePhoto(index) {
+    this.pickedFiles[index] = null;
+    this.imgPreviews[index] = "";
   }
 
   private setCurrentLocation() {

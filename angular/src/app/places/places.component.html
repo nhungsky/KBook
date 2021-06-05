@@ -6,7 +6,7 @@
           <h1>Quản lý địa điểm</h1>
         </div>
         <div class="col-6 text-right">
-          <a href="javascript:;" class="btn bg-blue" (click)="createRole()">
+          <a href="javascript:;" class="btn bg-blue" (click)="createPlace()">
             <i class="fa fa-plus-square"></i>
             Thêm mới
           </a>
@@ -27,7 +27,8 @@
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
-                <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập từ khoá...'" [(ngModel)]="keyword" (keyup.enter)="getDataPage(1)" />
+                <input type="text" class="form-control" name="keyword" [placeholder]="'Nhập từ khoá...'"
+                  [(ngModel)]="keyword" (keyup.enter)="getDataPage(1)" />
               </div>
             </div>
           </div>
@@ -39,6 +40,7 @@
                 <tr>
                   <th>Tên địa điểm</th>
                   <th>Mô tả</th>
+                  <th>Trạng thái</th>
                   <th style="width: 200px;">Tác vụ</th>
                 </tr>
               </thead>
@@ -55,8 +57,9 @@
                 ">
                   <td>{{ place.name }} </td>
                   <td>{{ place.description }}</td>
+                  <td>{{ place.isActive ? 'Đã chấp thuận':'Chưa chấp thuận' }}</td>
                   <td>
-                    <button type="button" class="btn btn-sm bg-secondary" (click)="editRole(place)">
+                    <button type="button" class="btn btn-sm bg-secondary" (click)="editPlace(place)">
                       <i class="fas fa-pencil-alt"></i>
                       Sửa
                     </button>
@@ -79,7 +82,7 @@
             </div>
             <div class="col-sm-4 col-12 text-center">
               <p class="mb-0 my-2">
-                Tổng só bản ghi: {{ totalItems }}
+                Tổng số bản ghi: {{ totalItems }}
               </p>
             </div>
             <div class="col-sm-4 col-12">

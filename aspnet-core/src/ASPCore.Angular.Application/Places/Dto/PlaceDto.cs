@@ -23,6 +23,7 @@ namespace ASPCore.Angular.Places.Dto
         public float Latitude { get; set; }
         [Required]
         public float Longitude { get; set; }
+        public int PlaceCategoryId { get; set; }
         public bool IsActive { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using ASPCore.Angular.PostCategories;
 using ASPCore.Angular.PostComments;
 using ASPCore.Angular.PostRatings;
 using ASPCore.Angular.Posts;
+using ASPCore.Angular.PlaceCategories;
 
 namespace ASPCore.Angular.EntityFrameworkCore
 {
@@ -16,6 +17,7 @@ namespace ASPCore.Angular.EntityFrameworkCore
         /* Define a DbSet for each entity of the application */
         public DbSet<Place> Places { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
+        public DbSet<PlaceCategory> PlaceCategories { get; set; }
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<PostRating> PostRatings { get; set; }
         public DbSet<Post> Posts { get; set; }

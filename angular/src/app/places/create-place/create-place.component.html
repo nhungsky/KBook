@@ -1,16 +1,27 @@
 <form class="form-horizontal" autocomplete="off" #createPostCategory="ngForm" (ngSubmit)="save()">
-  <abp-modal-header title="Thêm địa điểm mới ({{markerLat}},{{markerLat}})" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+  <abp-modal-header title="Thêm địa điểm mới ({{markerLat}},{{markerLat}})" (onCloseClick)="bsModalRef.hide()">
+  </abp-modal-header>
   <div class="modal-body">
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="name">
         Tên địa điểm
       </label>
       <div class="col-md-9">
-        <input type="text" class="form-control" name="name" id="name" required minlength="2" maxlength="32" [(ngModel)]="place.name" #nameModel="ngModel" #nameEl />
+        <input type="text" class="form-control" name="name" id="name" required minlength="2" maxlength="512"
+          [(ngModel)]="place.name" #nameModel="ngModel" #nameEl />
         <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
       </div>
     </div>
-
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="placeCategoryId">
+        Thuộc danh mục
+      </label>
+      <div class="col-md-9">
+        <select [(ngModel)]="place.placeCategoryId" class="form-control" name="placeCategoryId" id="placeCategoryId">
+          <option *ngFor="let c of placeCategories" [ngValue]="c.id">{{c.name}}</option>
+        </select>
+      </div>
+    </div>
     <div class="form-group row mb-3">
       <label class="col-md-3 col-form-label" for="description">
         Mô tả địa điểm
@@ -26,7 +37,8 @@
         Địa chỉ
       </label>
       <div class="col-md-9">
-        <input type="text" class="form-control" name="address" id="address" required minlength="2" maxlength="32" [(ngModel)]="place.address" #addressModel="ngModel" #addressEl />
+        <input type="text" class="form-control" name="address" id="address" required minlength="2" maxlength="512"
+          [(ngModel)]="place.address" #addressModel="ngModel" #addressEl />
         <abp-validation-summary [control]="addressModel" [controlEl]="addressEl"></abp-validation-summary>
       </div>
     </div>
@@ -39,18 +51,24 @@
         <div class="row">
           <div class="col-12 col-md-4">
             <input type="file" class="d-none" (change)="handleFileInput($event.target.files,0)" #fileInput1>
-            <img [src]="getImagePreview(0)" class="clickable preview-place-image w-100 border rounded" (click)="fileInput1.click()" />
-            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(0)">Xoá</button>
+            <img [src]="getImagePreview(0)" class="clickable preview-place-image w-100 border rounded"
+              (click)="fileInput1.click()" />
+            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(0)"
+              (click)="removePhoto(0)">Xoá</button>
           </div>
           <div class="col-12 col-md-4">
             <input type="file" class="d-none" (change)="handleFileInput($event.target.files,1)" #fileInput2>
-            <img [src]="getImagePreview(1)" class="clickable preview-place-image w-100 border rounded" (click)="fileInput2.click()" />
-            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(1)">Xoá</button>
+            <img [src]="getImagePreview(1)" class="clickable preview-place-image w-100 border rounded"
+              (click)="fileInput2.click()" />
+            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(1)"
+              (click)="removePhoto(1)">Xoá</button>
           </div>
           <div class="col-12 col-md-4">
             <input type="file" class="d-none" (change)="handleFileInput($event.target.files,2)" #fileInput3>
-            <img [src]="getImagePreview(2)" class="clickable preview-place-image w-100 border rounded" (click)="fileInput3.click()" />
-            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(2)">Xoá</button>
+            <img [src]="getImagePreview(2)" class="clickable preview-place-image w-100 border rounded"
+              (click)="fileInput3.click()" />
+            <button class="btn btn-danger btn-sm shadow-sm btn-block mt-2" type="button" [disabled]="isDisabled(2)"
+              (click)="removePhoto(2)">Xoá</button>
           </div>
         </div>
       </div>
@@ -62,15 +80,18 @@
       </label>
       <div class="col-md-9">
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" name="isActive" id="isActive" [(ngModel)]="place.isActive" />
+          <input type="checkbox" class="custom-control-input" name="isActive" id="isActive"
+            [(ngModel)]="place.isActive" />
           <label class="custom-control-label mt-2" for="isActive">Đã chấp thuận</label>
         </div>
       </div>
     </div>
 
-    <agm-map [latitude]="latitude" [longitude]="longitude" [mapTypeId]="type" [zoom]="zoom" class="w-100" style="height: 300px;" (centerChange)="onMapChanges($event)">
+    <agm-map [latitude]="latitude" [longitude]="longitude" [mapTypeId]="type" [zoom]="zoom" class="w-100"
+      style="height: 300px;" (centerChange)="onMapChanges($event)">
       <agm-marker [latitude]="markerLat" [longitude]="markerLng"></agm-marker>
     </agm-map>
   </div>
-  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPostCategory.form.valid || saving" (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+  <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPostCategory.form.valid || saving"
+    (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
 </form>

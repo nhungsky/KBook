@@ -17,10 +17,11 @@ import * as ApiServiceProxies from "./service-proxies";
     ApiServiceProxies.BaseInfoSettingServiceProxy,
     ApiServiceProxies.PostServiceProxy,
     ApiServiceProxies.PlaceServiceProxy,
+    ApiServiceProxies.PlaceCategoryServiceProxy,
     ApiServiceProxies.PostCommentServiceProxy,
     ApiServiceProxies.PostRatingServiceProxy,
     ApiServiceProxies.PostCategoryServiceProxy,
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
   ],
 })
-export class ServiceProxyModule {}
+export class ServiceProxyModule { }

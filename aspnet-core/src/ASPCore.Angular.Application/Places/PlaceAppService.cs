@@ -13,6 +13,13 @@ namespace ASPCore.Angular.Places
     {
         public PlaceAppService(IRepository<Place> repo) : base(repo) { }
 
+        protected override IQueryable<Place> CreateFilteredQuery(PagedPlaceResultRequestDto input)
+        {
+            return base.CreateFilteredQuery(input)
+                .Where(x=> (input.Keyword == null || input.Keyword.Length == 0 || x.Name.Contains(input.Keyword)) &&
+                    (input.IsActive == null || x.IsActive == input.IsActive));
+        }
+
         public async Task Approval(int id)
         {
             var current = Repository.Get(id);

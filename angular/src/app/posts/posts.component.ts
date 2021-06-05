@@ -50,7 +50,7 @@ export class PostsComponent extends PagedListingComponentBase<PostDto> {
     request.keyword = this.keyword;
 
     this._postService
-      .getAll(request.keyword, true, request.skipCount, request.maxResultCount)
+      .getAll(request.keyword, true, null, request.skipCount, request.maxResultCount)
       .pipe(
         finalize(() => {
           finishedCallback();

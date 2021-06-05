@@ -16,6 +16,7 @@ import { PostsComponent } from "./posts/posts.component";
 import { PostCategoriesComponent } from "./post-categories/post-categories.component";
 import { SocialNetworkComponent } from "./social-network/social-network.component";
 import { SocialHomeComponent } from "./social-network/social-home/social-home.component";
+import { PlaceCategoriesComponent } from "./place-categories/place-categories.component";
 
 @NgModule({
   imports: [
@@ -75,6 +76,11 @@ import { SocialHomeComponent } from "./social-network/social-home/social-home.co
           {
             path: "places",
             component: PlacesComponent,
+            canActivate: [AppRouteGuard],
+          },
+          {
+            path: "place-categories",
+            component: PlaceCategoriesComponent,
             canActivate: [AppRouteGuard],
           },
           {

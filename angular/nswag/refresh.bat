@@ -1,1 +1,1 @@
-"..\node_modules\.bin\nswag" run
+exec "../node_modules/.bin/nswag" run

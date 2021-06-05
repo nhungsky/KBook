@@ -61,6 +61,9 @@ import { SocialHomeComponent } from './social-network/social-home/social-home.co
 import { SocialHeaderComponent } from './layout/social-header/social-header.component';
 import { SocialSidebarComponent } from './layout/social-sidebar/social-sidebar.component';
 import { SocialSidebarRightComponent } from './layout/social-sidebar-right/social-sidebar-right.component';
+import { PlaceCategoriesComponent } from './place-categories/place-categories.component';
+import { CreatePlaceCategoryComponent } from './place-categories/create-place-category/create-place-category.component';
+import { UpdatePlaceCategoryComponent } from './place-categories/update-place-category/update-place-category.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +114,9 @@ import { SocialSidebarRightComponent } from './layout/social-sidebar-right/socia
     SocialHeaderComponent,
     SocialSidebarComponent,
     SocialSidebarRightComponent,
+    PlaceCategoriesComponent,
+    CreatePlaceCategoryComponent,
+    UpdatePlaceCategoryComponent,
   ],
   imports: [
     CommonModule,
