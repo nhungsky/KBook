@@ -5,18 +5,11 @@ import {
   EventEmitter,
   Output,
   Inject,
-  Input,
 } from "@angular/core";
 import { finalize } from "rxjs/operators";
 import { BsModalRef } from "ngx-bootstrap/modal";
 import { AppComponentBase } from "@shared/app-component-base";
 import {
-  RoleServiceProxy,
-  RoleDto,
-  PermissionDto,
-  CreateRoleDto,
-  PostCategoryDto,
-  PostCategoryServiceProxy,
   PlaceDto,
   PlaceServiceProxy,
   API_BASE_URL,

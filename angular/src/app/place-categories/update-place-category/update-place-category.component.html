@@ -1,1 +1,46 @@
-<p>update-place-category works!</p>
+<form class="form-horizontal" autocomplete="off" #createPostCategory="ngForm" (ngSubmit)="save()">
+    <abp-modal-header title="Thêm danh mục địa điểm mới" (onCloseClick)="bsModalRef.hide()">
+    </abp-modal-header>
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="name">
+                Tên danh mục
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="name" id="name" required minlength="2" maxlength="512"
+                    [(ngModel)]="placeCategory.name" #nameModel="ngModel" #nameEl />
+                <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="address">
+                Biểu tượng
+            </label>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <input type="file" class="d-none" (change)="handleFileInput($event.target.files)" #fileInput1>
+                        <img [src]="getImagePreview()" class="clickable preview-place-image w-100 border rounded"
+                            (click)="fileInput1.click()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row mb-0">
+            <label class="col-md-3 col-form-label">
+                Trạng thái
+            </label>
+            <div class="col-md-9">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="isActive" id="isActive"
+                        [(ngModel)]="placeCategory.isActive" />
+                    <label class="custom-control-label mt-2" for="isActive">Đã chấp thuận</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!createPostCategory.form.valid || saving"
+        (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>
