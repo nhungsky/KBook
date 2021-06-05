@@ -53,6 +53,8 @@ export class CreatePostComponent extends AppComponentBase
   save(): void {
     this.saving = true;
 
+    this.post.isActive = true;
+    this.post.isDeleted = false;
     this._postService
       .create(this.post)
       .pipe(
