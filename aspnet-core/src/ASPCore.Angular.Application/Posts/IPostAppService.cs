@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using ASPCore.Angular.Posts.Dto;
+using ASPCore.Angular.Users.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace ASPCore.Angular.Posts
         public PagedResultDto<PostDisplayDto> GetPostsLanding(PagedPostResultRequestDto inpt);
 
         public Task<int> Count();
+        public Task<List<UserDto>> TopCreator(int count = 5);
     }
 }

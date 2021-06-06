@@ -117,5 +117,24 @@ namespace ASPCore.Angular.Posts
         {
             return await Repository.CountAsync(x => x.IsActive && !x.IsDeleted);
         }
+
+        public async Task<List<UserDto>> TopCreator(int count = 5)
+        {
+            var query = await Repository.GetAllListAsync();
+            var res = query.GroupBy(x => x.CreatorUserId).Select(x => new
+            {
+                Count = x.Count(),
+                UserId = x.Key
+            })
+                .OrderByDescending(x => x.Count)
+                .Take(count)
+                .Join(UserRepository.GetAll().AsQueryable(),
+                x => x.UserId,
+                y => y.Id,
+                (x, y) => new { x, y })
+                .Select(x => x.y).ToList();
+
+            return ObjectMapper.Map<List<UserDto>>(res);
+        }
     }
 }
