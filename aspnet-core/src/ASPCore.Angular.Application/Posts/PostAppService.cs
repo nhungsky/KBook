@@ -118,7 +118,7 @@ namespace ASPCore.Angular.Posts
             return await Repository.CountAsync(x => x.IsActive && !x.IsDeleted);
         }
 
-        public async Task<List<UserDto>> TopCreator(int count = 5)
+        public async Task<List<TopCreatorDto>> TopCreator(int count = 5)
         {
             var query = await Repository.GetAllListAsync();
             var res = query.GroupBy(x => x.CreatorUserId).Select(x => new
@@ -132,9 +132,14 @@ namespace ASPCore.Angular.Posts
                 x => x.UserId,
                 y => y.Id,
                 (x, y) => new { x, y })
-                .Select(x => x.y).ToList();
-
-            return ObjectMapper.Map<List<UserDto>>(res);
+                .Select(x =>
+                {
+                    var res = ObjectMapper.Map<TopCreatorDto>(x.y);
+                    res.PostCount = x.x.Count;
+                    return res;
+                }).ToList();
+            return res;
+            // return ObjectMapper.Map<List<TopCreatorDto>>(res);
         }
     }
 }

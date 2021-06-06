@@ -18,6 +18,6 @@ namespace ASPCore.Angular.Posts
         public PagedResultDto<PostDisplayDto> GetPostsLanding(PagedPostResultRequestDto inpt);
 
         public Task<int> Count();
-        public Task<List<UserDto>> TopCreator(int count = 5);
+        public Task<List<TopCreatorDto>> TopCreator(int count = 5);
     }
 }

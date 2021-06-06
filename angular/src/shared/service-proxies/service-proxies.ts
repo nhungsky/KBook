@@ -1723,6 +1723,66 @@ export class PostServiceProxy {
     }
 
     /**
+     * @param count (optional) 
+     * @return Success
+     */
+    topCreator(count: number | undefined): Observable<TopCreatorDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Post/TopCreator?";
+        if (count === null)
+            throw new Error("The parameter 'count' cannot be null.");
+        else if (count !== undefined)
+            url_ += "count=" + encodeURIComponent("" + count) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTopCreator(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTopCreator(<any>response_);
+                } catch (e) {
+                    return <Observable<TopCreatorDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TopCreatorDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTopCreator(response: HttpResponseBase): Observable<TopCreatorDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(TopCreatorDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TopCreatorDto[]>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -2767,6 +2827,66 @@ export class PostRatingServiceProxy {
             }));
         }
         return _observableOf<number>(<any>null);
+    }
+
+    /**
+     * @param count (optional) 
+     * @return Success
+     */
+    topRatingUser(count: number | undefined): Observable<TopRatingUserDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/PostRating/TopRatingUser?";
+        if (count === null)
+            throw new Error("The parameter 'count' cannot be null.");
+        else if (count !== undefined)
+            url_ += "count=" + encodeURIComponent("" + count) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTopRatingUser(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTopRatingUser(<any>response_);
+                } catch (e) {
+                    return <Observable<TopRatingUserDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TopRatingUserDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processTopRatingUser(response: HttpResponseBase): Observable<TopRatingUserDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200.push(TopRatingUserDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TopRatingUserDto[]>(<any>null);
     }
 
     /**
@@ -5844,6 +5964,121 @@ export interface IPostDisplayDtoPagedResultDto {
     items: PostDisplayDto[] | undefined;
 }
 
+export class TopCreatorDto implements ITopCreatorDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    postCount: number;
+    id: number;
+
+    constructor(data?: ITopCreatorDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userName = _data["userName"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.emailAddress = _data["emailAddress"];
+            this.isActive = _data["isActive"];
+            this.fullName = _data["fullName"];
+            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames.push(item);
+            }
+            this.lockReason = _data["lockReason"];
+            this.photo = _data["photo"];
+            this.address = _data["address"];
+            this.biography = _data["biography"];
+            this.gender = _data["gender"];
+            this.birthday = _data["birthday"] ? moment(_data["birthday"].toString()) : <any>undefined;
+            this.postCount = _data["postCount"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): TopCreatorDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TopCreatorDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["emailAddress"] = this.emailAddress;
+        data["isActive"] = this.isActive;
+        data["fullName"] = this.fullName;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        data["lockReason"] = this.lockReason;
+        data["photo"] = this.photo;
+        data["address"] = this.address;
+        data["biography"] = this.biography;
+        data["gender"] = this.gender;
+        data["birthday"] = this.birthday ? this.birthday.toISOString() : <any>undefined;
+        data["postCount"] = this.postCount;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TopCreatorDto {
+        const json = this.toJSON();
+        let result = new TopCreatorDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITopCreatorDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    postCount: number;
+    id: number;
+}
+
 export class PostDto implements IPostDto {
     title: string;
     postCategoryId: number;
@@ -6082,6 +6317,125 @@ export class PostCommentDtoPagedResultDto implements IPostCommentDtoPagedResultD
 export interface IPostCommentDtoPagedResultDto {
     totalCount: number;
     items: PostCommentDto[] | undefined;
+}
+
+export class TopRatingUserDto implements ITopRatingUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    ratingCount: number;
+    ratingAvrg: number;
+    id: number;
+
+    constructor(data?: ITopRatingUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userName = _data["userName"];
+            this.name = _data["name"];
+            this.surname = _data["surname"];
+            this.emailAddress = _data["emailAddress"];
+            this.isActive = _data["isActive"];
+            this.fullName = _data["fullName"];
+            this.lastLoginTime = _data["lastLoginTime"] ? moment(_data["lastLoginTime"].toString()) : <any>undefined;
+            this.creationTime = _data["creationTime"] ? moment(_data["creationTime"].toString()) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames.push(item);
+            }
+            this.lockReason = _data["lockReason"];
+            this.photo = _data["photo"];
+            this.address = _data["address"];
+            this.biography = _data["biography"];
+            this.gender = _data["gender"];
+            this.birthday = _data["birthday"] ? moment(_data["birthday"].toString()) : <any>undefined;
+            this.ratingCount = _data["ratingCount"];
+            this.ratingAvrg = _data["ratingAvrg"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): TopRatingUserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TopRatingUserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["name"] = this.name;
+        data["surname"] = this.surname;
+        data["emailAddress"] = this.emailAddress;
+        data["isActive"] = this.isActive;
+        data["fullName"] = this.fullName;
+        data["lastLoginTime"] = this.lastLoginTime ? this.lastLoginTime.toISOString() : <any>undefined;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        data["lockReason"] = this.lockReason;
+        data["photo"] = this.photo;
+        data["address"] = this.address;
+        data["biography"] = this.biography;
+        data["gender"] = this.gender;
+        data["birthday"] = this.birthday ? this.birthday.toISOString() : <any>undefined;
+        data["ratingCount"] = this.ratingCount;
+        data["ratingAvrg"] = this.ratingAvrg;
+        data["id"] = this.id;
+        return data; 
+    }
+
+    clone(): TopRatingUserDto {
+        const json = this.toJSON();
+        let result = new TopRatingUserDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ITopRatingUserDto {
+    userName: string;
+    name: string;
+    surname: string;
+    emailAddress: string;
+    isActive: boolean;
+    fullName: string | undefined;
+    lastLoginTime: moment.Moment | undefined;
+    creationTime: moment.Moment;
+    roleNames: string[] | undefined;
+    lockReason: string | undefined;
+    photo: string | undefined;
+    address: string | undefined;
+    biography: string | undefined;
+    gender: Genders;
+    birthday: moment.Moment | undefined;
+    ratingCount: number;
+    ratingAvrg: number;
+    id: number;
 }
 
 export class PostRatingDto implements IPostRatingDto {

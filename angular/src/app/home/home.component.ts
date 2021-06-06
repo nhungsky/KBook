@@ -1,7 +1,7 @@
 import { Component, Injector, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
-import { PlaceCategoryServiceProxy, PlaceServiceProxy, PostCategoryServiceProxy, PostCommentServiceProxy, PostRatingServiceProxy, PostServiceProxy, UserServiceProxy } from '@shared/service-proxies/service-proxies';
+import { PlaceCategoryServiceProxy, PlaceServiceProxy, PostCategoryServiceProxy, PostCommentServiceProxy, PostRatingServiceProxy, PostServiceProxy, TopCreatorDto, TopRatingUserDto, UserDto, UserServiceProxy } from '@shared/service-proxies/service-proxies';
 
 declare function showLoading(): any;
 declare function hideLoading(): any;
@@ -20,6 +20,9 @@ export class HomeComponent extends AppComponentBase implements OnInit {
   ratingCount: number = 0;
   postCategoryCount: number = 0;
   placeCategoryCount: number = 0;
+
+  topCreators: TopCreatorDto[] = [];
+  topRating: TopRatingUserDto[] = [];
 
   constructor(injector: Injector,
     public postService: PostServiceProxy,
@@ -43,6 +46,13 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     this.ratingCount = await this.postRatingService.count().toPromise();
     this.postCategoryCount = await this.postCategoryService.count().toPromise();
     this.placeCategoryCount = await this.placeCategoryService.count().toPromise();
+
+    this.topCreators = await this.postService.topCreator(5).toPromise();
+    console.log(this.topCreators);
+    this.topRating = await this.postRatingService.topRatingUser(5).toPromise();
+
+    console.log(this.topRating);
+
 
     this.changeStatus();
     hideLoading();

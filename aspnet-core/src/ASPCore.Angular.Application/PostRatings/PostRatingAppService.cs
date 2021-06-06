@@ -28,7 +28,7 @@ namespace ASPCore.Angular.PostRatings
             return await Repository.CountAsync();
         }
 
-        public async Task<List<UserDto>> TopRatingUser(int count = 5)
+        public async Task<List<TopRatingUserDto>> TopRatingUser(int count = 5)
         {
             var allUser = UserRepository.GetAllList().AsQueryable();
             var allPost = PostRepository.GetAllList().AsQueryable();
@@ -54,9 +54,18 @@ namespace ASPCore.Angular.PostRatings
             .Join(allUser,
             r => r.UserId,
             u => u.Id,
-            (r, u) => new { r, u }).Select(x => x.u).ToList();
+            (r, u) => new { r, u })
+            .AsEnumerable()
+            .Select(x =>
+            {
+                var res = ObjectMapper.Map<TopRatingUserDto>(x.u);
+                res.RatingAvrg = x.r.RatingAvrg;
+                res.RatingCount = x.r.RatingCount;
+                return res;
+            })
+            .ToList();
 
-            return ObjectMapper.Map<List<UserDto>>(topUserRating);
+            return ObjectMapper.Map<List<TopRatingUserDto>>(topUserRating);
         }
     }
 }
