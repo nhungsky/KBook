@@ -57,6 +57,10 @@ namespace ASPCore.Angular.Controllers
                 new BaseInfoSettingModel {
                     Name = BaseInfoSettingProvider.AUTHOR_LINK,
                     Value= await _SettingManager.GetSettingValueAsync(BaseInfoSettingProvider.AUTHOR_LINK)
+                },
+                new BaseInfoSettingModel {
+                    Name = BaseInfoSettingProvider.HOME_BANNER_LINK,
+                    Value= await _SettingManager.GetSettingValueAsync(BaseInfoSettingProvider.HOME_BANNER_LINK)
                 }
             };
         }

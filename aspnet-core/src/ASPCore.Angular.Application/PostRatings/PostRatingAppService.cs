@@ -39,7 +39,7 @@ namespace ASPCore.Angular.PostRatings
             {
                 PostId = x.Key,
                 RatingCount = x.Count(),
-                RatingAvrg = x.Average(z => z.Rating)
+                RatingAvrg = x.Select(z => z.Rating).DefaultIfEmpty(0).Average()
             }).Join(allPost,
             r => r.PostId,
             p => p.Id,
@@ -48,8 +48,8 @@ namespace ASPCore.Angular.PostRatings
             .Select(x => new
             {
                 UserId = x.FirstOrDefault().p.CreatorUserId,
-                RatingCount = x.Sum(y => y.r.RatingCount),
-                RatingAvrg = x.Average(y => y.r.RatingAvrg)
+                RatingCount = x.Select(y => y.r.RatingCount).DefaultIfEmpty(0).Sum(),
+                RatingAvrg = x.Select(y => y.r.RatingAvrg).DefaultIfEmpty(0).Average()
             }).OrderByDescending(x => x.RatingAvrg).Take(count)
             .Join(allUser,
             r => r.UserId,

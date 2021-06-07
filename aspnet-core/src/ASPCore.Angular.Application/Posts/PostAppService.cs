@@ -106,9 +106,12 @@ namespace ASPCore.Angular.Posts
                     .GetAllList(x => x.PostId == result.Items[i].Id).Take(3).ToList());
                 // Đếm số sao
                 result.Items[i].PostRatingCount = PostRatingRepository.Count(x => x.PostId == result.Items[i].Id);
+                // Lấy sao mà bản thân đã đánh giá
+                result.Items[i].YourRating = PostRatingRepository.FirstOrDefault(x => x.PostId == result.Items[i].Id &&
+                x.CreatorUserId == AbpSession.UserId)?.Rating ?? 0F;
                 // Tính số sao trung bình
                 result.Items[i].PostRatingAvrg = PostRatingRepository
-                    .GetAllList(x => x.PostId == result.Items[i].Id).Average(x => x.Rating);
+                    .GetAllList(x => x.PostId == result.Items[i].Id).Select(x => x.Rating).DefaultIfEmpty(0).Average();
             }
             return result;
         }
