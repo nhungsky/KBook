@@ -127,16 +127,19 @@
                     <th class="w-25">Đánh giá</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="topCreators.length > 0">
                   <tr *ngFor="let tr of topRating;let i = index;">
                     <td>
                       {{i+1}}
                     </td>
                     <td>{{tr.fullName}}</td>
-                    <td>
-                      {{tr.ratingAvrg}}/{{tr.ratingCount}}
+                    <td class="text-center">
+                      {{tr.ratingAvrg}}/{{tr.ratingCount}} Sao
                     </td>
                   </tr>
+                </tbody>
+                <tbody *ngIf="topRating.length <= 0" class="text-center p-5">
+                  Chưa có dữ liệu xếp hạng
                 </tbody>
               </table>
             </div>
@@ -158,7 +161,7 @@
                     <th class="w-25">Số lượng</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="topCreators.length > 0">
                   <tr *ngFor="let tp of topCreators; let i = index;">
                     <td>
                       {{i + 1}}
@@ -166,8 +169,11 @@
                     <td>
                       {{tp.fullName}}
                     </td>
-                    <td>{{tp.postCount}}</td>
+                    <td class="text-center">{{tp.postCount}} Bài viết</td>
                   </tr>
+                </tbody>
+                <tbody *ngIf="topCreators.length <= 0" class="text-center p-5">
+                  Chưa có dữ liệu xếp hạng
                 </tbody>
               </table>
             </div>

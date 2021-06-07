@@ -23,9 +23,34 @@ namespace ASPCore.Angular.PostRatings
             UserRepository = userRepository;
             PostRepository = postRepository;
         }
+
         public async Task<int> Count()
         {
             return await Repository.CountAsync();
+        }
+
+        public async Task<float> PutRating(int postId, float rating)
+        {
+            var postRating = Repository.FirstOrDefault(x => x.PostId == postId && x.CreatorUserId == AbpSession.UserId);
+            if (postRating == null)
+            {
+                postRating = new PostRating();
+                postRating.PostId = postId;
+            }
+            postRating.Rating = rating;
+            if (postRating.Id <= 0)
+            {
+                await Repository.InsertAsync(postRating);
+            }
+            else
+            {
+                await Repository.UpdateAsync(postRating);
+            }
+            var correctQuery = Repository.GetAllList(x => x.PostId == postId &&
+                x.CreatorUserId != AbpSession.UserId)
+                .Select(x => x.Rating);
+            var count = correctQuery.Count() + 1;
+            return (correctQuery.DefaultIfEmpty(0).Average() + rating) / count;
         }
 
         public async Task<List<TopRatingUserDto>> TopRatingUser(int count = 5)
@@ -39,7 +64,7 @@ namespace ASPCore.Angular.PostRatings
             {
                 PostId = x.Key,
                 RatingCount = x.Count(),
-                RatingAvrg = x.Average(z => z.Rating)
+                RatingAvrg = x.Select(z => z.Rating).DefaultIfEmpty(0).Average()
             }).Join(allPost,
             r => r.PostId,
             p => p.Id,
@@ -48,8 +73,8 @@ namespace ASPCore.Angular.PostRatings
             .Select(x => new
             {
                 UserId = x.FirstOrDefault().p.CreatorUserId,
-                RatingCount = x.Sum(y => y.r.RatingCount),
-                RatingAvrg = x.Average(y => y.r.RatingAvrg)
+                RatingCount = x.Select(y => y.r.RatingCount).DefaultIfEmpty(0).Sum(),
+                RatingAvrg = x.Select(y => y.r.RatingAvrg).DefaultIfEmpty(0).Average()
             }).OrderByDescending(x => x.RatingAvrg).Take(count)
             .Join(allUser,
             r => r.UserId,

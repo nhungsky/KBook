@@ -16,6 +16,7 @@ namespace ASPCore.Angular.Configuration.SiteConfig
         public const string AUTHOR_NAME = "AUTHOR_NAME";
         public const string IMAGE_HOLDER = "IMAGE_HOLDER";
         public const string AUTHOR_LINK = "AUTHOR_LINK";
+        public const string HOME_BANNER_LINK = "HOME_BANNER_LINK";
         public override IEnumerable<SettingDefinition> GetSettingDefinitions(SettingDefinitionProviderContext context)
         {
             return new List<SettingDefinition> {
@@ -41,6 +42,10 @@ namespace ASPCore.Angular.Configuration.SiteConfig
                             clientVisibilityProvider: new VisibleSettingClientVisibilityProvider()),
                             new SettingDefinition(
                                 IMAGE_HOLDER, "/contents/holder.png",
+                            scopes: SettingScopes.All,
+                            clientVisibilityProvider: new VisibleSettingClientVisibilityProvider()),
+                            new SettingDefinition(
+                                HOME_BANNER_LINK, "/contents/temp_banner.jpeg",
                             scopes: SettingScopes.All,
                             clientVisibilityProvider: new VisibleSettingClientVisibilityProvider()),
                             new SettingDefinition(

@@ -48,11 +48,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     this.placeCategoryCount = await this.placeCategoryService.count().toPromise();
 
     this.topCreators = await this.postService.topCreator(5).toPromise();
-    console.log(this.topCreators);
     this.topRating = await this.postRatingService.topRatingUser(5).toPromise();
-
-    console.log(this.topRating);
-
 
     this.changeStatus();
     hideLoading();

@@ -24,6 +24,7 @@ namespace ASPCore.Angular.Posts.Dto
         public float PostRatingAvrg { get; set; }
         public int PostRatingCount { get; set; }
         public int PostCommentCount { get; set; }
+        public float YourRating { get; set; }
         //==============================================//
         public UserDto Creator { get; set; }
         public PostCategoryDto PostCategory { get; set; }

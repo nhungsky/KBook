@@ -20,6 +20,9 @@ import { API_BASE_URL } from "@shared/service-proxies/service-proxies";
 export class SocialNetworkComponent extends AppComponentBase implements OnInit {
   faviconPath: string = "";
   siteName: string = "";
+  imageHolder = "";
+
+  homeBannerLink = "";
 
   public appBaseUrl = "";
 
@@ -58,6 +61,8 @@ export class SocialNetworkComponent extends AppComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.faviconPath = this.appBaseUrl + abp.setting.get("FAVICON_PATH");
+    this.homeBannerLink = this.appBaseUrl + abp.setting.get("HOME_BANNER_LINK");
+    this.imageHolder = this.appBaseUrl + abp.setting.get("IMAGE_HOLDER");
     this.favIcon.href = this.faviconPath;
     this.siteName = abp.setting.get("SITE_NAME");
     this.title.innerHTML = this.siteName;
@@ -90,5 +95,16 @@ export class SocialNetworkComponent extends AppComponentBase implements OnInit {
 
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
+  }
+
+  standardImg(path: string) {
+    if (!path || path.length <= 0) {
+      return this.imageHolder;
+    }
+    if (path.startsWith("http://") || path.startsWith("https://")) {
+      return path;
+    } else {
+      return `${this.appBaseUrl}/${path}`;
+    }
   }
 }
