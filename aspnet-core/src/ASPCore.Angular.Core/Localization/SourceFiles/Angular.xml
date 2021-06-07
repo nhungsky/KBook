@@ -48,8 +48,8 @@
     <text name="IsActive" value="Is active" />
     <text name="FullName" value="Full name" />
     <text name="CreateNewUser" value="Create new user" />
-    <text name="Yes" value="Yes" />
-    <text name="No" value="No" />
+    <text name="Yes" value="Đống ý" />
+    <text name="No" value="Không" />
     <text name="Optional" value="Optional" />
     <text name="LeaveEmptyToSwitchToHost">Leave empty to switch to the host</text>
     <text name="CurrentTenant">Current tenant</text>

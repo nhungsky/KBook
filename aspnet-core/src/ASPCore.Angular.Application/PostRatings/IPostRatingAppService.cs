@@ -13,5 +13,6 @@ namespace ASPCore.Angular.PostRatings
     {
         public Task<int> Count();
         public Task<List<TopRatingUserDto>> TopRatingUser(int count = 5);
+        public Task<float> PutRating(int postId, float rating);
     }
 }

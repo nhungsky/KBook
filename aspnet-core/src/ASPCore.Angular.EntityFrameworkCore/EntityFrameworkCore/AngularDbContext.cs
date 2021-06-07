@@ -9,6 +9,7 @@ using ASPCore.Angular.PostComments;
 using ASPCore.Angular.PostRatings;
 using ASPCore.Angular.Posts;
 using ASPCore.Angular.PlaceCategories;
+using ASPCore.Angular.Core.FavoriteCreators;
 
 namespace ASPCore.Angular.EntityFrameworkCore
 {
@@ -21,6 +22,7 @@ namespace ASPCore.Angular.EntityFrameworkCore
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<PostRating> PostRatings { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<FavoriteObject> FavoriteObjects { get; set; }
 
         public AngularDbContext(DbContextOptions<AngularDbContext> options)
             : base(options)
