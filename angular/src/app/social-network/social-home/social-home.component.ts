@@ -1,7 +1,8 @@
 import { Component, HostListener, Inject, Injector, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { appModuleAnimation } from '@shared/animations/routerTransition';
 import { AppComponentBase } from '@shared/app-component-base';
-import { API_BASE_URL, FavoriteObjectServiceProxy, PostDisplayDto, PostRatingServiceProxy, PostServiceProxy } from '@shared/service-proxies/service-proxies';
+import { API_BASE_URL, FavoriteObjectServiceProxy, PostCategoryDto, PostCategoryServiceProxy, PostDisplayDto, PostRatingServiceProxy, PostServiceProxy } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 
 declare function showLoading(): any;
@@ -26,12 +27,26 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
   postLists: PostDisplayDto[] = [];
 
   favoriteUserIds: number[] = [];
+  favoritePostIds: number[] = [];
+
+  currentCatSlug = "";
+  postCategory: PostCategoryDto = null;
+
+  clear() {
+    this.keyword = "";
+    this.skipCount = 0;
+    this.maxResultCount = 3;
+    this.postLists = [];
+  }
 
   constructor(
     injector: Injector,
     public postService: PostServiceProxy,
+    public postCategoryService: PostCategoryServiceProxy,
     public favoriteObjectService: FavoriteObjectServiceProxy,
     public postRatingService: PostRatingServiceProxy,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     @Inject(API_BASE_URL) baseUrl?: string) {
     super(injector);
     this.appBaseUrl = baseUrl;
@@ -42,6 +57,40 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
       .subscribe(ids => {
         this.favoriteUserIds = ids;
       });
+
+    favoriteObjectService.getFavoritePostIds()
+      .pipe()
+      .subscribe(ids => {
+        this.favoritePostIds = ids;
+      });
+
+    this.activatedRoute.params.subscribe(params => {
+      console.log(params);
+      let catSlug = params['catSlug'];
+      console.log(`Đã bắt được: ${catSlug}`);
+      this.currentCatSlug = catSlug;
+      this.clear();
+      if (this.currentCatSlug && this.currentCatSlug.length > 0) {
+        this.postCategoryService.getBySlug(this.currentCatSlug)
+          .pipe()
+          .subscribe(pc => {
+            console.log(pc);
+            this.postCategory = pc;
+            this.currentPostCategoryId = pc.id;
+            this.loadPosts();
+          });
+      } else {
+        this.loadPosts();
+      }
+    });
+  }
+
+  isPostInFavorite(postId) {
+    return this.favoritePostIds.findIndex(x => x == postId) >= 0;
+  }
+
+  isUserInFavorite(userId) {
+    return this.favoriteUserIds.findIndex(x => x == userId) >= 0;
   }
 
   standardImg(path: string) {
@@ -56,7 +105,7 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadPosts();
+
   }
 
   loadPosts() {
@@ -79,16 +128,82 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
     return res.asHours();
   }
 
-  calRoundPrevHours(time: moment.Moment) {
+  calTime(time: moment.Moment) {
     var res = this.calPreviousHours(time);
-    return Math.round(res).toString();
+    const hours = Math.round(res);
+    if (hours < 1) {
+      const minutes = Math.ceil(hours * 60);
+      return `${minutes} phút`;
+    } if (hours < 24) {
+      return hours + " giờ";
+    } else {
+      const days = Math.round(hours / 24);
+      return `${days} ngày`
+    }
   }
 
   onPutFavoriteUser(userId: number) {
+    showLoading();
+    this.favoriteObjectService.putFavoriteUser(userId)
+      .pipe()
+      .subscribe(res => {
+        if (this.favoriteUserIds.indexOf(res.id) < 0) {
+          this.favoriteUserIds.push(res.id);
+        }
+        hideLoading();
+      });
+  }
+
+  onRemoveFavoriteUser(userId: number) {
+    abp.message.confirm(
+      "Bạn thực sự muốn hủy theo dõi người dùng này?",
+      "HỦY THEO DÕI",
+      (result: boolean) => {
+        if (result) {
+          showLoading();
+          this.favoriteObjectService.removeFavoriteUser(userId)
+            .pipe()
+            .subscribe(res => {
+              if (this.favoriteUserIds.indexOf(res) >= 0) {
+                this.favoriteUserIds = this.favoriteUserIds.filter(x => x != res);
+              }
+              hideLoading();
+            });
+        }
+      },
+    );
   }
 
   onPutFavoritePost(postId: number) {
+    showLoading();
+    this.favoriteObjectService.putFavoritePost(postId)
+      .pipe()
+      .subscribe(res => {
+        if (this.favoritePostIds.indexOf(res.id) < 0) {
+          this.favoritePostIds.push(res.id);
+        }
+        hideLoading();
+      });
+  }
 
+  onRemoveFavoritePost(postId: number) {
+    abp.message.confirm(
+      "Bạn thực muốn bỏ yêu thích bài viết này?",
+      "BỎ YÊU THÍCH",
+      (result: boolean) => {
+        if (result) {
+          showLoading();
+          this.favoriteObjectService.removeFavoritePost(postId)
+            .pipe()
+            .subscribe(res => {
+              if (this.favoritePostIds.indexOf(res) >= 0) {
+                this.favoritePostIds = this.favoritePostIds.filter(x => x != res);
+              }
+              hideLoading();
+            });
+        }
+      },
+    );
   }
 
   onPostRatingChange(value: number, postId: number) {

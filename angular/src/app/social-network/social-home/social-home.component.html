@@ -8,13 +8,26 @@
                             <img [src]="standardImg(post.creator.photo)" />
                         </div>
                         <div class="creator-bi">
-                            <div class="creator-name ">{{post.creator.fullName}}</div>
-                            <div class="post-uptime">{{calRoundPrevHours(post.creationTime)}} giờ</div>
+                            <div class="creator-name ">{{post.creator.fullName}}
+                                <button *ngIf="!isUserInFavorite(post.creator.id)"
+                                    (click)="onPutFavoriteUser(post.creator.id)"
+                                    class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"
+                                        aria-hidden="true"></i> Theo dõi</button>
+                                <button *ngIf="isUserInFavorite(post.creator.id)"
+                                    (click)="onRemoveFavoriteUser(post.creator.id)"
+                                    class="btn btn-outline-danger love-per-btn btn-sm ml-3"><i class="fa fa-low-vision"
+                                        aria-hidden="true"></i> Bỏ theo dõi</button>
+                            </div>
+                            <div class="post-uptime">{{calTime(post.creationTime)}}</div>
                         </div>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-outline-danger love-per-btn"><i class="fa fa-heart"
-                                aria-hidden="true"></i> Thêm bài viết yêu thích</button>
+                        <button *ngIf="!isPostInFavorite(post.id)" class="btn btn-danger love-per-btn"
+                            (click)="onPutFavoritePost(post.id)"><i class="fa fa-heart" aria-hidden="true"></i> Thêm
+                            bài viết yêu thích</button>
+                        <button *ngIf="isPostInFavorite(post.id)" class="btn btn-outline-danger love-per-btn"
+                            (click)="onRemoveFavoritePost(post.id)"><i class="fa fa-times" aria-hidden="true"></i> Bỏ
+                            yêu thích</button>
                     </div>
                 </div>
             </div>

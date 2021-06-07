@@ -109,6 +109,12 @@ import { PlaceCategoriesComponent } from "./place-categories/place-categories.co
             component: SocialHomeComponent,
             canActivate: [AppRouteGuard],
           },
+          {
+            path: "specified/:catSlug",
+            component: SocialHomeComponent,
+            
+            canActivate: [AppRouteGuard],
+          },
         ]
       }
     ]),

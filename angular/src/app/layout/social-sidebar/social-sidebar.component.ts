@@ -70,6 +70,7 @@ export class SocialSidebarComponent extends PagedListingComponentBase<PostDto> {
       .getAll("", 0, 1000).toPromise();
     this.postCategories = postAz.items;
     this.changeStatus();
+    this.trueSelectMenu();
   }
 
   changeStatus(): void {
@@ -150,5 +151,15 @@ export class SocialSidebarComponent extends PagedListingComponentBase<PostDto> {
       return true;
     }
     return this.permission.isGranted(item.permissionName);
+  }
+
+  trueSelectMenu() {
+    document.querySelectorAll(".nav-link .social-nav").forEach((crrEl) => {
+      if (crrEl.classList.contains("d-none")) {
+        const iClass = crrEl.querySelector("i").classList;
+        const pName = crrEl.querySelector("p").innerHTML;
+        console.log(`Got ${iClass} - ${pName}`);
+      }
+    });
   }
 }

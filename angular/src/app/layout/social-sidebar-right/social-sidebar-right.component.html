@@ -2,7 +2,8 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat pt-1 px-2">
-                <li><button class="btn btn-primary btn-block" (click)="createNewPost()">Đăng bài chi sẻ</button></li>
+                <li><button class="btn btn-outline-primary btn-block" (click)="createNewPost()">Đăng bài chi sẻ</button>
+                </li>
                 <li class="mt-2">
                     <div class="ranking-bar">
                         <tabset>
@@ -27,7 +28,7 @@
                                                     class="nav-logo-image rounded-circle border" style="opacity: 1;" />
                                                 {{tp.fullName}}
                                             </td>
-                                            <td class="text-center">{{tp.postCount}}</td>
+                                            <td class="text-center">{{tp.postCount}} bài</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -55,7 +56,10 @@
                                             <td>
                                                 {{i+1}}
                                             </td>
-                                            <td>{{tr.fullName}}</td>
+                                            <td>
+                                                <img [src]="[standardImg(tr.photo)]"
+                                                    class="nav-logo-image rounded-circle border" style="opacity: 1;" />
+                                                {{tr.fullName}}</td>
                                             <td class="text-center">
                                                 {{tr.ratingAvrg}}/5 ({{tr.ratingCount}} lần)
                                             </td>

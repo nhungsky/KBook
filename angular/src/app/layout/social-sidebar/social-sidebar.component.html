@@ -22,7 +22,7 @@
                     </li>
                     <div class="spec-container">
                         <li class="nav-item social-nav-li" *ngFor="let pc of postCategories">
-                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['news-feed',pc.slug]"
+                            <a class="nav-link social-nav special-nav-soc" [routerLink]="['specified',pc.slug]"
                                 [routerLinkActive]="['d-none']" (click)="changeMenuSelected(pc.name,'fa fa-star')">
                                 <i class="nav-icon fa fa-chevron-right"></i>
                                 <p>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['/']" [routerLinkActive]="['d-none']"
+                    <a class="nav-link social-nav" routerLink="" [routerLinkActive]="['d-none']"
                         (click)="changeMenuSelected('Trang chủ','fas fa-home')">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
