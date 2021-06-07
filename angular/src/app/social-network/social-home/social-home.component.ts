@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PostListDto, PostServiceProxy } from '@shared/service-proxies/service-proxies';
+
 
 @Component({
   selector: 'app-social-home',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SocialHomeComponent implements OnInit {
 
-  constructor() { }
+  postLists: PostListDto[] = [];
+  constructor(public postService: PostServiceProxy) {
+
+  }
 
   ngOnInit(): void {
   }

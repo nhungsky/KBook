@@ -67,7 +67,7 @@ export class SocialSidebarComponent extends PagedListingComponentBase<PostDto> {
       });
 
     var postAz = await this._postCategoryService
-      .getAll("", 0, 5).toPromise();
+      .getAll("", 0, 1000).toPromise();
     this.postCategories = postAz.items;
     this.changeStatus();
   }
