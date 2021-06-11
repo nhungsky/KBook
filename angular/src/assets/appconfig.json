@@ -1,8 +1,7 @@
 {
-  "remoteServiceBaseUrl": "http://localhost:21021",
-  "appBaseUrl": "http://localhost:4200",
-  "localeMappings": [
-    {
+  "remoteServiceBaseUrl": "https://kbook-source.vistark.me",
+  "appBaseUrl": "https://kbook-source.vistark.me",
+  "localeMappings": [{
       "from": "pt-BR",
       "to": "pt"
     },
