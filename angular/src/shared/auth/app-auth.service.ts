@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
-import { TokenService, LogService, UtilsService } from 'abp-ng2-module';
-import { AppConsts } from '@shared/AppConsts';
-import { UrlHelper } from '@shared/helpers/UrlHelper';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {finalize} from 'rxjs/operators';
+import {TokenService, LogService, UtilsService} from 'abp-ng2-module';
+import {AppConsts} from '@shared/AppConsts';
+import {UrlHelper} from '@shared/helpers/UrlHelper';
 import {
     AuthenticateModel,
     AuthenticateResultModel,
@@ -26,7 +26,7 @@ export class AppAuthService {
         this.clear();
     }
 
-    logout(reload?: boolean): void {
+    logout(reload = true): void {
         abp.auth.clearToken();
         abp.utils.setCookieValue(
             AppConsts.authorization.encryptedAuthTokenName,
@@ -35,12 +35,13 @@ export class AppAuthService {
             abp.appPath
         );
         if (reload !== false) {
-            location.href = AppConsts.appBaseUrl;
+            location.href = '/';
         }
     }
 
     authenticate(finallyCallback?: () => void): void {
-        finallyCallback = finallyCallback || (() => { });
+        finallyCallback = finallyCallback || (() => {
+        });
 
         this._tokenAuthService
             .authenticate(this.authenticateModel)
