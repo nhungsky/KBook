@@ -95,17 +95,7 @@ export class AppAuthService {
             abp.appPath
         );
 
-        let initialUrl = UrlHelper.initialUrl;
-        if (initialUrl.startsWith('/account/login') || initialUrl.startsWith('/account/register')) {
-            initialUrl = AppConsts.appBaseUrl;
-        }
-
-        // // Nếu sau khi đăng nhập mà không phải quay về lại office thì chuyển hướng người dùng về lại
-        // if (initialUrl != '/') {
-        //     initialUrl = '/';
-        // }
-
-        location.href = initialUrl;
+        location.href = '/';
     }
 
     private clear(): void {
