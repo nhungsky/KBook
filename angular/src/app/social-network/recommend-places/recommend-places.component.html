@@ -1,1 +1,24 @@
-<p>recommend-places works!</p>
+<div class="main-content-wrapper" [@routerTransition]>
+    <div class="map-mt">
+        <div class="place-cat-group">
+            <ul class="list-group list-group-horizontal-sm">
+                <li class="list-group-item" [ngClass]="{'activated':selectedCategoryId == -1 || !selectedCategoryId}"
+                    (click)="changePlaceCategoryId(-1)">
+                    <img [src]="standardImg(logo)" alt="" class="place-image-icon">
+                    Tất cả
+                </li>
+                <li class="list-group-item" *ngFor="let placeCategory of placeCategories"
+                    (click)="changePlaceCategoryId(placeCategory.id)"
+                    [ngClass]="{'activated':selectedCategoryId == placeCategory.id}">
+                    <img [src]="standardImg(placeCategory.featureImage)" alt="" class="place-image-icon">
+                    {{placeCategory.name}}
+                </li>
+            </ul>
+        </div>
+        <agm-map [latitude]="latitude" [longitude]="longitude" [mapTypeId]="type" [zoom]="zoom" class="w-100"
+                 style="height: 86vh;" (centerChange)="onMapChanges($event)">
+            <agm-marker [latitude]="markerLat" [longitude]="markerLng"></agm-marker>
+        </agm-map>
+    </div>
+    <app-loading [isLoading]="isLoading"></app-loading>
+</div>

@@ -21,8 +21,8 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
     styleUrls: ['./social-sidebar-right.component.css']
 })
 export class SocialSidebarRightComponent implements OnInit {
-    isTopRatingLoading: boolean = true;
-    isTopPostLoading: boolean = true;
+    isTopRatingLoading = true;
+    isTopPostLoading = true;
 
     topCreators: TopCreatorDto[] = [];
     topRating: TopRatingUserDto[] = [];
