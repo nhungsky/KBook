@@ -3,7 +3,6 @@
 # IDEs and editors
 .vs/
 obj/
-bin/
 aspnet-core/src/ASPCore.Angular.Web.Host/App_Data/Logs/
 aspnet-core/src/ASPCore.Angular.Web.Mvc/App_Data/Logs/
 aspnet-core/src/ASPCore.Angular.Migrator/Logs/Logs.txt

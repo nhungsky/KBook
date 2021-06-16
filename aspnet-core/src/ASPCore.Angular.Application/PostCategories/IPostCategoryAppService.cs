@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace ASPCore.Angular.PostCategories
 {
-    public interface IPostCategoryAppService : IAsyncCrudAppService<PostCategoryDto, int, PagedPostCategoryResultRequestDto>
+    public interface
+        IPostCategoryAppService : IAsyncCrudAppService<PostCategoryDto, int, PagedPostCategoryResultRequestDto>
     {
         public Task<int> Count();
+        public Task<PostCategoryDto> GetBySlug(string slug);
     }
 }
