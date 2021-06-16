@@ -9,16 +9,25 @@ using System.Threading.Tasks;
 
 namespace ASPCore.Angular.Places
 {
-    public class PlaceAppService : AsyncCrudAppService<Place, PlaceDto, int, PagedPlaceResultRequestDto>, IPlaceAppService
+    public class PlaceAppService : AsyncCrudAppService<Place, PlaceDto, int, PagedPlaceResultRequestDto>,
+        IPlaceAppService
     {
-        public PlaceAppService(IRepository<Place> repo) : base(repo) { }
+        public PlaceAppService(IRepository<Place> repo) : base(repo)
+        {
+        }
 
         protected override IQueryable<Place> CreateFilteredQuery(PagedPlaceResultRequestDto input)
         {
-            return base.CreateFilteredQuery(input)
+            var query = base.CreateFilteredQuery(input)
                 .Where(x => (input.Keyword == null || input.Keyword.Length == 0 || x.Name.Contains(input.Keyword)) &&
-                    (input.IsActive == null || x.IsActive == input.IsActive));
-        }
+                            (input.IsActive == null || x.IsActive == input.IsActive));
+            if (input.PlaceCategoryId != null && input.PlaceCategoryId > 0)
+            {
+                query = query.Where(x => x.PlaceCategoryId == input.PlaceCategoryId);
+            }
+
+            return query;
+        }   
 
         public async Task Approval(int id)
         {
@@ -37,6 +46,7 @@ namespace ASPCore.Angular.Places
             current.IsActive = false;
             await Repository.UpdateAsync(current);
         }
+
         public async Task<int> Count()
         {
             return await Repository.CountAsync(x => x.IsActive);

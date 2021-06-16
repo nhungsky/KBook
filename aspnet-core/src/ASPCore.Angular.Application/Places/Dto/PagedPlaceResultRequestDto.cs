@@ -11,5 +11,6 @@ namespace ASPCore.Angular.Places.Dto
     {
         public string Keyword { get; set; }
         public bool? IsActive { get; set; }
+        public int? PlaceCategoryId { get; set; }
     }
 }
