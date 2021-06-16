@@ -66,6 +66,8 @@ import { CreatePlaceCategoryComponent } from './place-categories/create-place-ca
 import { UpdatePlaceCategoryComponent } from './place-categories/update-place-category/update-place-category.component';
 import { UserCreateNewPostComponent } from './social-network/social-home/user-create-new-post/user-create-new-post.component';
 import { UserUpdatePostComponent } from './social-network/social-home/user-update-post/user-update-post.component';
+import { FavoritesComponent } from './social-network/favorites/favorites.component';
+import { StickyPostsComponent } from './social-network/sticky-posts/sticky-posts.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +123,8 @@ import { UserUpdatePostComponent } from './social-network/social-home/user-updat
     UpdatePlaceCategoryComponent,
     UserCreateNewPostComponent,
     UserUpdatePostComponent,
+    FavoritesComponent,
+    StickyPostsComponent,
   ],
   imports: [
     CommonModule,

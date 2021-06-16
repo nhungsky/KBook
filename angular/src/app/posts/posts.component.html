@@ -19,7 +19,14 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-6">&emsp;</div>
+                        <div class="col-md-6">
+                            <select [(ngModel)]="selectedPostCategoryId" class="form-control" name="postCategoryId"
+                                    (ngModelChange)="onPostCategoryChange()"
+                                    id="postCategoryId">
+                                <option value="-1">Tất cả</option>
+                                <option *ngFor="let c of postCategories" [ngValue]="c.id">{{c.name}}</option>
+                            </select>
+                        </div>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -28,8 +35,8 @@
                                     </button>
                                 </div>
                                 <input type="text" class="form-control" name="keyword"
-                                    [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
-                                    (keyup.enter)="getDataPage(1)" />
+                                       [placeholder]="'SearchWithThreeDot' | localize" [(ngModel)]="keyword"
+                                       (keyup.enter)="getDataPage(1)"/>
                             </div>
                         </div>
                     </div>
@@ -38,15 +45,16 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" [busy]="isTableLoading">
                             <thead class="bg-light">
-                                <tr>
-                                    <th>Tiêu đề</th>
-                                    <th>Các thẻ</th>
-                                    <th>Tổng quan</th>
-                                    <th style="width: 200px;">{{ "Actions" | localize }}</th>
-                                </tr>
+                            <tr>
+                                <th>Tiêu đề</th>
+                                <th>Chủ đề</th>
+                                <th>Các thẻ</th>
+                                <th>Tổng quan</th>
+                                <th style="width: 200px;">{{ "Actions" | localize }}</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="
+                            <tr *ngFor="
                   let post of posts
                     | paginate
                       : {
@@ -56,20 +64,21 @@
                           totalItems: totalItems
                         }
                 ">
-                                    <td>{{ post.title }} </td>
-                                    <td>{{ post.tags }} </td>
-                                    <td>{{ getSummary(post) }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm bg-secondary" (click)="editRole(post)">
-                                            <i class="fas fa-pencil-alt"></i>
-                                            {{ "Edit" | localize }}
-                                        </button>
-                                        <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(post)">
-                                            <i class="fas fa-trash"></i>
-                                            {{ "Delete" | localize }}
-                                        </button>
-                                    </td>
-                                </tr>
+                                <td>{{ post.title }} </td>
+                                <td>{{getPostCategoryName(post.postCategoryId)}}</td>
+                                <td>{{ post.tags }} </td>
+                                <td>{{ getSummary(post) }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm bg-secondary" (click)="editRole(post)">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        {{ "Edit" | localize }}
+                                    </button>
+                                    <button type="button" class="btn btn-sm bg-danger mx-2" (click)="delete(post)">
+                                        <i class="fas fa-trash"></i>
+                                        {{ "Delete" | localize }}
+                                    </button>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

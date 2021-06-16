@@ -2,7 +2,8 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat pt-1 px-2">
-                <li><button class="btn btn-outline-primary btn-block" (click)="createNewPost()">Đăng bài chi sẻ</button>
+                <li>
+                    <button class="btn btn-outline-primary btn-block" (click)="createNewPost()">Đăng bài chi sẻ</button>
                 </li>
                 <li class="mt-2">
                     <div class="ranking-bar">
@@ -10,30 +11,30 @@
                             <tab heading="TOP Bài nhiều" class="bg-white">
                                 <!-- <app-loading [isLoading]="isTopPostLoading"></app-loading> -->
                                 <table class="table table-hover text-nowrap" *ngIf="topCreators.length > 0"
-                                    style="margin-bottom: 0px;">
+                                       style="margin-bottom: 0px;">
                                     <thead class="bg-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th class="">Họ và tên</th>
-                                            <th class="w-25">Đã đăng</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="">Họ và tên</th>
+                                        <th class="w-25">Đã đăng</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let tp of topCreators; let i = index;">
-                                            <td>
-                                                {{i + 1}}
-                                            </td>
-                                            <td>
-                                                <img [src]="[standardImg(tp.photo)]"
-                                                    class="nav-logo-image rounded-circle border" style="opacity: 1;" />
-                                                {{tp.fullName}}
-                                            </td>
-                                            <td class="text-center">{{tp.postCount}} bài</td>
-                                        </tr>
+                                    <tr *ngFor="let tp of topCreators; let i = index;">
+                                        <td>
+                                            {{i + 1}}
+                                        </td>
+                                        <td>
+                                            <img [src]="[standardImg(tp.photo)]"
+                                                 class="nav-logo-image rounded-circle border" style="opacity: 1;"/>
+                                            {{tp.fullName}}
+                                        </td>
+                                        <td class="text-center">{{tp.postCount}} bài</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <div class="no-ranking-data text-center"
-                                    *ngIf="topCreators.length <= 0 && !isTopPostLoading">
+                                     *ngIf="topCreators.length <= 0 && !isTopPostLoading">
                                     Chưa có dữ liệu xếp hạng
                                 </div>
                                 <div class="no-ranking-data text-center" *ngIf="isTopPostLoading">
@@ -43,31 +44,31 @@
                             <tab heading="TOP Top sao nhiều" class="bg-white">
                                 <!-- <app-loading [isLoading]="isTopRatingLoading"></app-loading> -->
                                 <table class="table table-hover text-nowrap" *ngIf="topRating.length > 0"
-                                    style="margin-bottom: 0px;">
+                                       style="margin-bottom: 0px;">
                                     <thead class="bg-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th class="">Họ và tên</th>
-                                            <th class="w-25">Đánh giá</th>
-                                        </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="">Họ và tên</th>
+                                        <th class="w-25">Đánh giá</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let tr of topRating;let i = index;">
-                                            <td>
-                                                {{i+1}}
-                                            </td>
-                                            <td>
-                                                <img [src]="[standardImg(tr.photo)]"
-                                                    class="nav-logo-image rounded-circle border" style="opacity: 1;" />
-                                                {{tr.fullName}}</td>
-                                            <td class="text-center">
-                                                {{tr.ratingAvrg}}/5 ({{tr.ratingCount}} lần)
-                                            </td>
-                                        </tr>
+                                    <tr *ngFor="let tr of topRating;let i = index;">
+                                        <td>
+                                            {{i + 1}}
+                                        </td>
+                                        <td>
+                                            <img [src]="[standardImg(tr.photo)]"
+                                                 class="nav-logo-image rounded-circle border" style="opacity: 1;"/>
+                                            {{tr.fullName}}</td>
+                                        <td class="text-center">
+                                            {{tr.ratingAvrg.toFixed(1)}}/5 sao ({{tr.ratingCount}} lần)
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <div class="no-ranking-data text-center"
-                                    *ngIf="topRating.length <= 0 && !isTopRatingLoading">
+                                     *ngIf="topRating.length <= 0 && !isTopRatingLoading">
                                     Chưa có dữ liệu xếp hạng
                                 </div>
                                 <div class="no-ranking-data text-center" *ngIf="isTopRatingLoading">
@@ -77,7 +78,7 @@
                         </tabset>
                     </div>
                     <div class="mt-2">
-                        <img [src]="homeBannerLink" class="banner-img" />
+                        <img [src]="homeBannerLink" class="banner-img"/>
                     </div>
                 </li>
             </ul>

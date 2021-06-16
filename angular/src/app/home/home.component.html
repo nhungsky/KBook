@@ -1,185 +1,185 @@
 ﻿<div [@routerTransition]>
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <h1>Tran chủ</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Tran chủ</h1>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
-  <section class="content px-2">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-4">
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>{{postCount}}</h3>
-              <p>Bài viết</p>
+    </section>
+    <section class="content px-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{postCount}}</h3>
+                            <p>Bài viết</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-database"></i>
+                        </div>
+                        <a [routerLink]="['..','posts']" class="small-box-footer">
+                            Truy cập
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{userCount}}</h3>
+                            <p>Thành viên</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <a [routerLink]="['..','users']" class="small-box-footer">
+                            Truy cập
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>{{placeCount}}</h3>
+                            <p>Địa điểm</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-map-marker"></i>
+                        </div>
+                        <a [routerLink]="['..','places']" class="small-box-footer">
+                            Truy cập
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="icon">
-              <i class="fa fa-database"></i>
-            </div>
-            <a [routerLink]="['..','posts']" class="small-box-footer">
-              Truy cập
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>{{userCount}}</h3>
-              <p>Thành viên</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <a [routerLink]="['..','users']" class="small-box-footer">
-              Truy cập
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>{{placeCount}}</h3>
-              <p>Địa điểm</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-map-marker"></i>
-            </div>
-            <a [routerLink]="['..','places']" class="small-box-footer">
-              Truy cập
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
             <span class="info-box-icon bg-primary elevation-1">
               <i class="fa fa-star"></i>
             </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Đánh giá sao</span>
-              <span class="info-box-number">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Đánh giá sao</span>
+                            <span class="info-box-number">
                 {{ratingCount}}
               </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
             <span class="info-box-icon bg-warning elevation-1">
               <i class="fa fa-comments"></i>
             </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Bình luận</span>
-              <span class="info-box-number">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Bình luận</span>
+                            <span class="info-box-number">
                 {{commentCount}}
               </span>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix hidden-md-up"></div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix hidden-md-up"></div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
             <span class="info-box-icon bg-info elevation-1">
               <i class="fa fa-sitemap"></i>
             </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Danh mục bài viết</span>
-              <span class="info-box-number">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Danh mục bài viết</span>
+                            <span class="info-box-number">
                 {{postCategoryCount}}
               </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
             <span class="info-box-icon bg-success elevation-1">
               <i class="fa fa-map"></i>
             </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Danh mục địa điểm</span>
-              <span class="info-box-number">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Danh mục địa điểm</span>
+                            <span class="info-box-number">
                 {{placeCategoryCount}}
               </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Bảng xếp hạng top 5 người được nhiều sao nhất</h3>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead class="bg-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th class="">Họ và tên</th>
+                                    <th class="w-25">Đánh giá</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="topCreators.length > 0">
+                                <tr *ngFor="let tr of topRating;let i = index;">
+                                    <td>
+                                        {{i + 1}}
+                                    </td>
+                                    <td>{{tr.fullName}}</td>
+                                    <td class="text-center">
+                                        {{tr.ratingAvrg.toFixed(1)}}/{{tr.ratingCount}} Sao
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tbody *ngIf="topRating.length <= 0" class="text-center p-5">
+                                Chưa có dữ liệu xếp hạng
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Bảng xếp hạng top 5 người đăng nhiều bài nhất</h3>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead class="bg-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th class="">Họ và tên</th>
+                                    <th class="w-25">Số lượng</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="topCreators.length > 0">
+                                <tr *ngFor="let tp of topCreators; let i = index;">
+                                    <td>
+                                        {{i + 1}}
+                                    </td>
+                                    <td>
+                                        {{tp.fullName}}
+                                    </td>
+                                    <td class="text-center">{{tp.postCount}} Bài viết</td>
+                                </tr>
+                                </tbody>
+                                <tbody *ngIf="topCreators.length <= 0" class="text-center p-5">
+                                Chưa có dữ liệu xếp hạng
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Bảng xếp hạng top 5 người được nhiều sao nhất</h3>
-            </div>
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-nowrap">
-                <thead class="bg-light">
-                  <tr>
-                    <th>#</th>
-                    <th class="">Họ và tên</th>
-                    <th class="w-25">Đánh giá</th>
-                  </tr>
-                </thead>
-                <tbody *ngIf="topCreators.length > 0">
-                  <tr *ngFor="let tr of topRating;let i = index;">
-                    <td>
-                      {{i+1}}
-                    </td>
-                    <td>{{tr.fullName}}</td>
-                    <td class="text-center">
-                      {{tr.ratingAvrg}}/{{tr.ratingCount}} Sao
-                    </td>
-                  </tr>
-                </tbody>
-                <tbody *ngIf="topRating.length <= 0" class="text-center p-5">
-                  Chưa có dữ liệu xếp hạng
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Bảng xếp hạng top 5 người đăng nhiều bài nhất</h3>
-            </div>
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-nowrap">
-                <thead class="bg-light">
-                  <tr>
-                    <th>#</th>
-                    <th class="">Họ và tên</th>
-                    <th class="w-25">Số lượng</th>
-                  </tr>
-                </thead>
-                <tbody *ngIf="topCreators.length > 0">
-                  <tr *ngFor="let tp of topCreators; let i = index;">
-                    <td>
-                      {{i + 1}}
-                    </td>
-                    <td>
-                      {{tp.fullName}}
-                    </td>
-                    <td class="text-center">{{tp.postCount}} Bài viết</td>
-                  </tr>
-                </tbody>
-                <tbody *ngIf="topCreators.length <= 0" class="text-center p-5">
-                  Chưa có dữ liệu xếp hạng
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 </div>
