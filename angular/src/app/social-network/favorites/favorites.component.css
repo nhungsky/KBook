@@ -1,0 +1,74 @@
+.main-content-wrapper {
+    margin-right: 350px;
+}
+
+.post-container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.creator-img > img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid #e6e6e6;
+}
+
+.creator-img {
+    display: inline-block;
+}
+
+.creator-info {
+    padding: 15px;
+}
+
+.creator-bi {
+    display: inline-block;
+    position: absolute;
+    vertical-align: bottom;
+    margin-top: 6px;
+    margin-left: 12px;
+    width: 100%;
+}
+
+.creator-name {
+    font-weight: bold;
+}
+
+.post-uptime {
+    color: #828282;
+    font-size: 15px;
+}
+
+.love-per-btn {
+    float: right;
+    margin-top: 12px;
+    margin-right: 100px !important;
+}
+
+.bet-seprator {
+    border-left: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+}
+
+.card-footer {
+    background-color: #FFFFFF;
+}
+
+.current-rating {
+    position: relative;
+    background: #FFFFFFA0;
+    float: right;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: -100px;
+    border-bottom: 1px solid #ff4757;
+    border-bottom-left-radius: 30px;
+}
+
+.comment-count,
+.rating-count {
+    color: #828282;
+}

@@ -23,7 +23,7 @@
                     <div class="spec-container">
                         <li class="nav-item social-nav-li" *ngFor="let pc of postCategories">
                             <a class="nav-link social-nav special-nav-soc" [routerLink]="['specified',pc.slug]"
-                                [routerLinkActive]="['d-none']" (click)="changeMenuSelected(pc.name,'fa fa-star')">
+                               [routerLinkActive]="['d-none']" (click)="changeMenuSelected(pc.name,'fa fa-star')">
                                 <i class="nav-icon fa fa-chevron-right"></i>
                                 <p>
                                     {{pc.name}}
@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" routerLink="" [routerLinkActive]="['d-none']"
-                        (click)="changeMenuSelected('Trang chủ','fas fa-home')">
+                    <a class="nav-link social-nav" routerLink="new-feeds" [routerLinkActive]="['d-none']"
+                       (click)="changeMenuSelected('Trang chủ','fas fa-home')">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Trang chủ
@@ -43,29 +43,29 @@
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['dia-diem']" [routerLinkActive]="['d-none']"
-                        (click)="changeMenuSelected('Địa điểm','fa fa-map')">
+                    <a class="nav-link social-nav" [routerLink]="['recommend-places']" [routerLinkActive]="['d-none']"
+                       (click)="changeMenuSelected('Địa điểm gợi ý','fa fa-map')">
                         <i class="nav-icon fa fa-map"></i>
                         <p>
-                            Địa điểm
+                            Địa điểm gợi ý
                         </p>
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['yeu-thich']" [routerLinkActive]="['d-none']"
-                        (click)="changeMenuSelected('Yêu thích','fa fa-heart')">
-                        <i class="nav-icon fa fa-heart"></i>
+                    <a class="nav-link social-nav" [routerLink]="['favorites']" [routerLinkActive]="['d-none']"
+                       (click)="changeMenuSelected('Người đã theo dõi','fa fa-rss')">
+                        <i class="nav-icon fa fa-rss"></i>
                         <p>
-                            Yêu thích
+                            Người đã theo dõi
                         </p>
                     </a>
                 </li>
                 <li class="nav-item social-nav-li">
-                    <a class="nav-link social-nav" [routerLink]="['bai-viet-da-luu']" [routerLinkActive]="['d-none']"
-                        (click)="changeMenuSelected('Bài viết đã lưu','fa fa-bookmark')">
-                        <i class="nav-icon fa fa-bookmark"></i>
+                    <a class="nav-link social-nav" [routerLink]="['sticky-posts']" [routerLinkActive]="['d-none']"
+                       (click)="changeMenuSelected('Bài viết đã thích','fa fa-heart')">
+                        <i class="nav-icon fa fa fa-heart"></i>
                         <p>
-                            Bài viết đã lưu
+                            Bài viết đã thích
                         </p>
                     </a>
                 </li>

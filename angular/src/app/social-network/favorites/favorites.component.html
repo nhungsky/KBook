@@ -1,1 +1,33 @@
-<p>favorites works!</p>
+<div class="main-content-wrapper" [@routerTransition]>
+    <div class="post-container" style="" *ngFor="let user of favoriteUserList">
+        <div class="card w-100 rounded" style="">
+            <div class="creator-info">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="creator-img">
+                            <img [src]="standardImg(user.photo)"/>
+                        </div>
+                        <div class="creator-bi">
+                            <div class="creator-name ">{{user.fullName}}
+                                <button *ngIf="!isUserInFavorite(user.id)"
+                                        (click)="onPutFavoriteUser(user.id)"
+                                        class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"
+                                                                                           aria-hidden="true"></i> Theo
+                                    dõi
+                                </button>
+                                <button *ngIf="isUserInFavorite(user.id)"
+                                        (click)="onRemoveFavoriteUser(user.id)"
+                                        class="btn btn-outline-danger love-per-btn btn-sm ml-3"><i
+                                        class="fa fa-low-vision"
+                                        aria-hidden="true"></i> Bỏ theo dõi
+                                </button>
+                            </div>
+                            <div class="post-uptime">{{getUserGender(user.gender)}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-loading [isLoading]="isLoading"></app-loading>
+</div>
