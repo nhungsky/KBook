@@ -69,6 +69,7 @@ import {UserUpdatePostComponent} from './social-network/social-home/user-update-
 import {FavoritesComponent} from './social-network/favorites/favorites.component';
 import {StickyPostsComponent} from './social-network/sticky-posts/sticky-posts.component';
 import { RecommendPlacesComponent } from './social-network/recommend-places/recommend-places.component';
+import { UpdateMyProfileComponent } from './layout/social-header/update-my-profile/update-my-profile.component';
 
 @NgModule({
     declarations: [
@@ -127,6 +128,7 @@ import { RecommendPlacesComponent } from './social-network/recommend-places/reco
         FavoritesComponent,
         StickyPostsComponent,
         RecommendPlacesComponent,
+        UpdateMyProfileComponent,
     ],
     imports: [
         CommonModule,

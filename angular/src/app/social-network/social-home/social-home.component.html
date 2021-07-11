@@ -5,29 +5,42 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="creator-img">
-                            <img [src]="standardImg(post.creator.photo)" />
+                            <img [src]="standardImg(post.creator.photo)"/>
                         </div>
                         <div class="creator-bi">
                             <div class="creator-name ">{{post.creator.fullName}}
-                                <button *ngIf="!isUserInFavorite(post.creator.id)"
-                                    (click)="onPutFavoriteUser(post.creator.id)"
-                                    class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"
-                                        aria-hidden="true"></i> Theo dõi</button>
-                                <button *ngIf="isUserInFavorite(post.creator.id)"
-                                    (click)="onRemoveFavoriteUser(post.creator.id)"
-                                    class="btn btn-outline-danger love-per-btn btn-sm ml-3"><i class="fa fa-low-vision"
-                                        aria-hidden="true"></i> Bỏ theo dõi</button>
+                                <button *ngIf="!isUserInFavorite(post.creator.id) && currentUserId != post.creator.id"
+                                        (click)="onPutFavoriteUser(post.creator.id)"
+                                        class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"
+                                                                                           aria-hidden="true"></i> Theo
+                                    dõi
+                                </button>
+                                <button *ngIf="isUserInFavorite(post.creator.id) && currentUserId != post.creator.id"
+                                        (click)="onRemoveFavoriteUser(post.creator.id)"
+                                        class="btn btn-outline-danger love-per-btn btn-sm ml-3"><i
+                                        class="fa fa-low-vision"
+                                        aria-hidden="true"></i> Bỏ theo dõi
+                                </button>
                             </div>
                             <div class="post-uptime">{{calTime(post.creationTime)}}</div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6" *ngIf="currentUserId != post.creator.id">
                         <button *ngIf="!isPostInFavorite(post.id)" class="btn btn-danger love-per-btn"
-                            (click)="onPutFavoritePost(post.id)"><i class="fa fa-heart" aria-hidden="true"></i> Thêm
-                            bài viết yêu thích</button>
+                                (click)="onPutFavoritePost(post.id)"><i class="fa fa-heart" aria-hidden="true"></i> Thêm
+                            bài viết yêu thích
+                        </button>
                         <button *ngIf="isPostInFavorite(post.id)" class="btn btn-outline-danger love-per-btn"
-                            (click)="onRemoveFavoritePost(post.id)"><i class="fa fa-times" aria-hidden="true"></i> Bỏ
-                            yêu thích</button>
+                                (click)="onRemoveFavoritePost(post.id)"><i class="fa fa-times" aria-hidden="true"></i>
+                            Bỏ
+                            yêu thích
+                        </button>
+                    </div>
+                    <div class="col-6" *ngIf="currentUserId == post.creator.id">
+                        <button class="btn btn-danger love-per-btn"
+                                (click)="onPutFavoritePost(post.id)"><i class="fa fa-trash" aria-hidden="true"></i> Xóa
+                            bài viết
+                        </button>
                     </div>
                 </div>
             </div>
@@ -47,7 +60,7 @@
                     <div class="col-6">
                         <div class="rating-count" *ngIf="post.postRatingCount > 0">
                             {{post.postRatingAvrg}}/5 <i class="fa fa-star" style="color: #ffd601;"
-                                aria-hidden="true"></i> - {{post.postRatingCount}} lượt đánh
+                                                         aria-hidden="true"></i> - {{post.postRatingCount}} lượt đánh
                             giá
                         </div>
                         <div class="rating-count" *ngIf="post.postRatingCount <= 0">
@@ -57,16 +70,18 @@
                     <div class="col-6">
                         <div class="comment-count float-right" *ngIf="post.postCommentCount > 0">
                             {{post.postCommentCount}}
-                            Bình luận</div>
+                            Bình luận
+                        </div>
                         <div class="comment-count float-right" *ngIf="post.postCommentCount <= 0">
-                            Chưa có bình luận nào</div>
+                            Chưa có bình luận nào
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-6">
                         <app-rating [fixed]="false" [initValue]="post.yourRating"
-                            (onRatingChange)="onPostRatingChange($event,post.id)"></app-rating>
+                                    (onRatingChange)="onPostRatingChange($event,post.id)"></app-rating>
                     </div>
                     <div class="col-6">
                         <button type="button" class="btn btn-light float-right">Xem bài và bình luận</button>

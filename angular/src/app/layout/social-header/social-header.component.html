@@ -37,9 +37,9 @@
                       id="user-fullname">{{getCurrentUsername()}}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right menu-user-z" *dropdownMenu>
-                <a class="dropdown-item" [routerLink]="['users','update-profile']">
+                <button class="dropdown-item" (click)="updateProfile()">
                     <i class="fas fa-user-edit mr-2"></i> Cập nhật hồ sơ
-                </a>
+                </button>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" [routerLink]="['update-password']">
                     <i class="fa fa-key mr-2"></i> Đổi mật khẩu

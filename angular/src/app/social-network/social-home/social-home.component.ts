@@ -27,6 +27,8 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
     public appBaseUrl = '';
     imageHolder = '';
 
+    currentUserId = abp.session.userId;
+
     isLoading = false;
     keyword = '';
     currentPostCategoryId: number = null;

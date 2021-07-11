@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import {AppComponentBase} from '@shared/app-component-base';
 import {AppAuthService} from '@shared/auth/app-auth.service';
-import {API_BASE_URL, UserProfileServiceProxy, UserServiceProxy} from '@shared/service-proxies/service-proxies';
-import {MenuItem} from '../../../shared/layout/menu-item';
+import {API_BASE_URL, RoleDto, UserProfileServiceProxy, UserServiceProxy} from '@shared/service-proxies/service-proxies';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {UpdateMyProfileComponent} from './update-my-profile/update-my-profile.component';
 
 @Component({
     selector: 'app-social-header',
@@ -31,6 +32,7 @@ export class SocialHeaderComponent extends AppComponentBase
     isAdmin = false;
 
     constructor(injector: Injector,
+                private _modalService: BsModalService,
                 private _profileService: UserProfileServiceProxy,
                 private _authService: AppAuthService,
                 @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
@@ -69,5 +71,23 @@ export class SocialHeaderComponent extends AppComponentBase
 
     getCurrentUsername() {
         return this.currentUserName;
+    }
+
+    updateProfile(): void {
+        this.showCreateOrEditProfileDialog();
+    }
+
+    showCreateOrEditProfileDialog(): void {
+        const createOrEditProfileDialog = this._modalService.show(
+            UpdateMyProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {},
+            }
+        );
+
+        createOrEditProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
     }
 }
