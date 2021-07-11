@@ -13,6 +13,9 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
 import {finalize} from 'rxjs/operators';
+import {UpdateMyProfileComponent} from '../../layout/social-header/update-my-profile/update-my-profile.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {ReadPostComponent} from './read-post/read-post.component';
 
 declare function showLoading(): any;
 
@@ -51,6 +54,7 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
         public postCategoryService: PostCategoryServiceProxy,
         public favoriteObjectService: FavoriteObjectServiceProxy,
         public postRatingService: PostRatingServiceProxy,
+        private _modalService: BsModalService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         @Inject(API_BASE_URL) baseUrl?: string) {
@@ -267,5 +271,36 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
         if (pos > max - 100) {
             this.loadPosts();
         }
+    }
+
+    showReadPost(post: PostDisplayDto) {
+        const readPostDialog = this._modalService.show(
+            ReadPostComponent,
+            {
+                class: 'modal-lg post-dialog',
+                initialState: {
+                    id: post.id,
+                    appBaseUrl: this.appBaseUrl,
+                    imageHolder: this.imageHolder,
+                    currentPostCategoryId: this.currentPostCategoryId,
+                    postLists: this.postLists,
+                    favoriteUserIds: this.favoriteUserIds,
+                    favoritePostIds: this.favoritePostIds,
+                    currentCatSlug: this.currentCatSlug,
+                    postCategory: this.postCategory,
+                    creator: post.creator,
+                    creationTime: post.creationTime,
+                    postRatingAvrg: post.postRatingAvrg,
+                    postRatingCount: post.postRatingCount,
+                    postCommentCount: post.postCommentCount,
+                    yourRating: post.yourRating,
+                },
+                backdrop: 'static'
+            }
+        );
+
+        readPostDialog.content.onSave.subscribe(() => {
+            // window.location.reload();
+        });
     }
 }

@@ -84,7 +84,9 @@
                                     (onRatingChange)="onPostRatingChange($event,post.id)"></app-rating>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-light float-right">Xem bài và bình luận</button>
+                        <button type="button" class="btn btn-light float-right" (click)="showReadPost(post)">Xem bài
+                            và bình luận
+                        </button>
                     </div>
                 </div>
             </div>

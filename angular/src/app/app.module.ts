@@ -70,6 +70,7 @@ import {FavoritesComponent} from './social-network/favorites/favorites.component
 import {StickyPostsComponent} from './social-network/sticky-posts/sticky-posts.component';
 import { RecommendPlacesComponent } from './social-network/recommend-places/recommend-places.component';
 import { UpdateMyProfileComponent } from './layout/social-header/update-my-profile/update-my-profile.component';
+import { ReadPostComponent } from './social-network/social-home/read-post/read-post.component';
 
 @NgModule({
     declarations: [
@@ -129,6 +130,7 @@ import { UpdateMyProfileComponent } from './layout/social-header/update-my-profi
         StickyPostsComponent,
         RecommendPlacesComponent,
         UpdateMyProfileComponent,
+        ReadPostComponent,
     ],
     imports: [
         CommonModule,

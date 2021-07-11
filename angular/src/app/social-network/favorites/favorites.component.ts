@@ -5,7 +5,7 @@ import {
     PostCategoryDto,
     PostCategoryServiceProxy, PostDisplayDto,
     PostRatingServiceProxy,
-    PostServiceProxy, UserDto, UserServiceProxy
+    PostServiceProxy, UserDto, UserProfileServiceProxy, UserServiceProxy
 } from '../../../shared/service-proxies/service-proxies';
 import {AppComponentBase} from '../../../shared/app-component-base';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -39,7 +39,7 @@ export class FavoritesComponent extends AppComponentBase implements OnInit {
     constructor(
         injector: Injector,
         public favoriteObjectService: FavoriteObjectServiceProxy,
-        public userService: UserServiceProxy,
+        public userProfileService: UserProfileServiceProxy,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         @Inject(API_BASE_URL) baseUrl?: string) {
@@ -91,7 +91,10 @@ export class FavoritesComponent extends AppComponentBase implements OnInit {
             limit = this.favoriteUserIds.length;
         }
         for (let i = this.skipCount; i < limit; i++) {
-            const u = await this.userService.get(this.favoriteUserIds[i]).toPromise();
+            if (this.favoriteUserIds[i] <= 0) {
+                continue;
+            }
+            const u = await this.userProfileService.getUser(this.favoriteUserIds[i]).toPromise();
             this.favoriteUserList.push(u);
         }
         this.isLoading = false;

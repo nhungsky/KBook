@@ -7,5 +7,6 @@ namespace ASPCore.Angular.UserProfile
     public interface IUserProfileAppService : IApplicationService
     {
         Task<UserDto> GetProfileAsync();
+        Task<UserDto> GetUserAsync(long userId);
     }
 }

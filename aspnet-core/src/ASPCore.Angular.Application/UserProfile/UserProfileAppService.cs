@@ -50,6 +50,17 @@ namespace ASPCore.Angular.UserProfile
             return resultUser;
         }
 
+        public async Task<UserDto> GetUserAsync(long userId)
+        {
+            var currentUser = await _userRepository.GetAsync(userId);
+            var userRoles = await _userManager.GetRolesAsync(currentUser);
+
+            var resultUser = ObjectMapper.Map<UserDto>(currentUser);
+            resultUser.RoleNames = userRoles.ToArray();
+
+            return resultUser;
+        }
+
         public async Task<UserDto> UpdateProfileAsync(UserDto input)
         {
             if (AbpSession.UserId == null)
