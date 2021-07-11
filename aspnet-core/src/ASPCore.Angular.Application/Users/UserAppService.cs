@@ -26,7 +26,8 @@ using Microsoft.EntityFrameworkCore;
 namespace ASPCore.Angular.Users
 {
     [AbpAuthorize(PermissionNames.Pages_Users)]
-    public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
+    public class UserAppService :
+        AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
         private readonly RoleManager _roleManager;
@@ -103,19 +104,13 @@ namespace ASPCore.Angular.Users
         [AbpAuthorize(PermissionNames.Pages_Users_Activation)]
         public async Task Activate(EntityDto<long> user)
         {
-            await Repository.UpdateAsync(user.Id, async (entity) =>
-            {
-                entity.IsActive = true;
-            });
+            await Repository.UpdateAsync(user.Id, async (entity) => { entity.IsActive = true; });
         }
 
         [AbpAuthorize(PermissionNames.Pages_Users_Activation)]
         public async Task DeActivate(EntityDto<long> user)
         {
-            await Repository.UpdateAsync(user.Id, async (entity) =>
-            {
-                entity.IsActive = false;
-            });
+            await Repository.UpdateAsync(user.Id, async (entity) => { entity.IsActive = false; });
         }
 
         public async Task<ListResultDto<RoleDto>> GetRoles()
@@ -161,7 +156,9 @@ namespace ASPCore.Angular.Users
         protected override IQueryable<User> CreateFilteredQuery(PagedUserResultRequestDto input)
         {
             return Repository.GetAllIncluding(x => x.Roles)
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) || x.EmailAddress.Contains(input.Keyword))
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
+                    x => x.UserName.Contains(input.Keyword) || x.Name.Contains(input.Keyword) ||
+                         x.EmailAddress.Contains(input.Keyword))
                 .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
         }
 
@@ -220,10 +217,12 @@ namespace ASPCore.Angular.Users
             }
 
             var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
-            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
+            var loginAsync =
+                await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
             {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
+                throw new UserFriendlyException(
+                    "Your 'Admin Password' did not match the one on record.  Please try again.");
             }
 
             if (currentUser.IsDeleted || !currentUser.IsActive)
@@ -253,4 +252,3 @@ namespace ASPCore.Angular.Users
         }
     }
 }
-

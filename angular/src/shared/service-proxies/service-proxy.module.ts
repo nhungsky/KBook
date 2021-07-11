@@ -22,6 +22,7 @@ import * as ApiServiceProxies from "./service-proxies";
     ApiServiceProxies.PostRatingServiceProxy,
     ApiServiceProxies.PostCategoryServiceProxy,
     ApiServiceProxies.FavoriteObjectServiceProxy,
+    ApiServiceProxies.UserProfileServiceProxy,
     { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
   ],
 })
