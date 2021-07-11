@@ -1,0 +1,101 @@
+<form class="form-horizontal" autocomplete="off" #updateUserProfile="ngForm" (ngSubmit)="save()">
+    <abp-modal-header [title]="'Cập nhật hồ sơ'" (onCloseClick)="bsModalRef.hide()"></abp-modal-header>
+    <div class="modal-body">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="photo">
+                Ảnh đại diện
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="photo" id="photo" minlength="2" maxlength="255"
+                       [(ngModel)]="userProfile.photo" #photoModel="ngModel" #photoEl/>
+                <abp-validation-summary [control]="photoModel" [controlEl]="photoEl"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="address">
+                Địa chỉ
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="address" id="address" minlength="2"
+                       maxlength="255"
+                       [(ngModel)]="userProfile.address" #addressModel="ngModel" #addressEl/>
+                <abp-validation-summary [control]="addressModel" [controlEl]="addressEl"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="name">
+                Tên
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="name" id="name" minlength="2"
+                       maxlength="255"
+                       [(ngModel)]="userProfile.name" #nameModel="ngModel" #nameEl/>
+                <abp-validation-summary [control]="nameModel" [controlEl]="nameEl"></abp-validation-summary>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="surname">
+                Họ và tên lót
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="surname" id="surname" minlength="2"
+                       maxlength="255"
+                       [(ngModel)]="userProfile.surname" #surnameModel="ngModel" #surnameEl/>
+                <abp-validation-summary [control]="surnameModel" [controlEl]="surnameEl"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="emailAddress">
+                Địa chỉ
+            </label>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="emailAddress" id="emailAddress" minlength="2"
+                       maxlength="255"
+                       [(ngModel)]="userProfile.emailAddress" #emailAddressModel="ngModel" #emailAddressEl/>
+                <abp-validation-summary [control]="emailAddressModel"
+                                        [controlEl]="emailAddressEl"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="birthday">
+                Sinh nhật
+            </label>
+            <div class="col-md-9">
+                <input type="date" class="form-control" name="birthday" id="birthday" minlength="2"
+                       maxlength="255"
+                       [(ngModel)]="userProfile.birthday" #birthdayModel="ngModel" #birthdayEl/>
+                <abp-validation-summary [control]="birthdayModel" [controlEl]="birthdayEl"></abp-validation-summary>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="gender">
+                Giới tính
+            </label>
+            <div class="col-md-9">
+                <select [(ngModel)]="userProfile.gender" class="form-control" name="gender"
+                        id="gender">
+                    <option [ngValue]="genders._0">Bỏ qua</option>
+                    <option [ngValue]="genders._1">Nam</option>
+                    <option [ngValue]="genders._2">Nữ</option>
+                    <option [ngValue]="genders._3">Không xác định</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="biography">
+                Giới thiệu bản thân
+            </label>
+            <div class="col-md-9">
+                <textarea type="text" class="form-control" name="biography" id="biography"
+                          [(ngModel)]="userProfile.biography">
+                    </textarea>
+            </div>
+        </div>
+    </div>
+    <abp-modal-footer [cancelDisabled]="saving" [saveDisabled]="!updateUserProfile.form.valid || saving"
+                      (onCancelClick)="bsModalRef.hide()"></abp-modal-footer>
+</form>

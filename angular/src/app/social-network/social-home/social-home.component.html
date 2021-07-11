@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-6" *ngIf="currentUserId == post.creator.id">
                         <button class="btn btn-danger love-per-btn"
-                                (click)="onPutFavoritePost(post.id)"><i class="fa fa-trash" aria-hidden="true"></i> Xóa
+                                (click)="delete(post.id)"><i class="fa fa-trash" aria-hidden="true"></i> Xóa
                             bài viết
                         </button>
                     </div>

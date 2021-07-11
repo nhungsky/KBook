@@ -7,11 +7,12 @@ import {
     FavoriteObjectServiceProxy,
     PostCategoryDto,
     PostCategoryServiceProxy,
-    PostDisplayDto,
+    PostDisplayDto, PostDto,
     PostRatingServiceProxy,
     PostServiceProxy
 } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
+import {finalize} from 'rxjs/operators';
 
 declare function showLoading(): any;
 
@@ -86,6 +87,28 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
                 this.loadPosts();
             }
         });
+    }
+
+    async delete(postId: number) {
+        const postDto = await this.postService.get(postId).toPromise();
+        abp.message.confirm(
+            this.l('PostCategoryDeleteWarningMessage', postDto.title),
+            undefined,
+            (result: boolean) => {
+                if (result) {
+                    this.postService
+                        .delete(postDto.id)
+                        .pipe(
+                            finalize(() => {
+                                abp.notify.success(this.l('SuccessfullyDeleted'));
+                                window.location.reload();
+                            })
+                        )
+                        .subscribe(() => {
+                        });
+                }
+            }
+        );
     }
 
     clear() {
