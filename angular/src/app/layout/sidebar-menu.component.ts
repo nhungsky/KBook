@@ -53,7 +53,7 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 ),
             ]),
             new MenuItem('Địa điểm', '', 'fa fa-map-marker', '', [
-                new MenuItem('Danh sách', '/manager/social-network-user-places', 'fa fa-bars'),
+                new MenuItem('Danh sách', '/manager/places', 'fa fa-bars'),
                 new MenuItem(
                     'Danh mục',
                     '/manager/place-categories',
