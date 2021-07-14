@@ -5,7 +5,7 @@ import {
     API_BASE_URL,
     FavoriteObjectServiceProxy,
     PostCategoryDto,
-    PostCategoryServiceProxy, PostCommentDto,
+    PostCategoryServiceProxy, PostCommentDto, PostCommentServiceProxy,
     PostDisplayDto, PostDto,
     PostRatingServiceProxy,
     PostServiceProxy, UserDto, UserProfileServiceProxy
@@ -49,7 +49,9 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
     yourRating: number;
 
     postComment: PostCommentDto = new PostCommentDto();
-    saving:boolean = false;
+    saving = false;
+
+    postComments: PostCommentDto[] = [];
 
     constructor(
         injector: Injector,
@@ -61,6 +63,7 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
         private activatedRoute: ActivatedRoute,
         private userProfileService: UserProfileServiceProxy,
         private router: Router,
+        private postCommentService: PostCommentServiceProxy,
         @Inject(API_BASE_URL) baseUrl?: string) {
         super(injector);
     }
@@ -108,8 +111,13 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
 
     async ngOnInit() {
         this.post = await this.postService.get(this.id).toPromise();
+        await this.loadComments();
     }
 
+    async loadComments() {
+        const cmts = await this.postCommentService.getAll(null, 0, 1000).toPromise();
+        this.postComments = cmts.items;
+    }
 
     calPreviousHours(time: moment.Moment) {
         const now = moment(new Date());
@@ -214,6 +222,17 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
             });
     }
 
-    save() {
+    saveComment() {
+        this.saving = true;
+        this.postCommentService.create(this.postComment)
+            .pipe(finalize(() => {
+                this.saving = false;
+            }))
+            .subscribe(async () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                // this.bsModalRef.hide();
+                this.postComment = new PostCommentDto();
+                await this.loadComments();
+            });
     }
 }

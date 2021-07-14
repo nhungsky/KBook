@@ -61,8 +61,8 @@
             <div class="row">
                 <div class="col-6">
                     <div class="rating-count" *ngIf="postRatingCount > 0">
-                        {{postRatingAvrg}}/5 <i class="fa fa-star" style="color: #ffd601;"
-                                                aria-hidden="true"></i> - {{postRatingCount}} lượt đánh
+                        {{postRatingAvrg.toFixed(1)}}/5 <i class="fa fa-star" style="color: #ffd601;"
+                                                           aria-hidden="true"></i> - {{postRatingCount}} lượt đánh
                         giá
                     </div>
                     <div class="rating-count" *ngIf="postRatingCount <= 0">
@@ -93,13 +93,14 @@
             </div>
             <hr>
             <div>
-                <form class="form-horizontal" autocomplete="off" #postCommentForm="ngForm" (ngSubmit)="save()">
+                <form class="form-horizontal" autocomplete="off" #postCommentForm="ngForm" (ngSubmit)="saveComment()">
                     <div class="form-group row">
-                        <label class="col-12 col-form-label" for="biography">
+                        <label class="col-12 col-form-label" for="comment">
                             Bình luận
                         </label>
                         <div class="col-12">
-                <textarea type="text" class="form-control" name="biography" id="biography"
+                <textarea type="text" class="form-control" name="comment" id="comment"
+                          maxlength="255"
                           [(ngModel)]="postComment.comment">
                     </textarea>
                         </div>
@@ -111,6 +112,35 @@
                         </button>
                     </div>
                 </form>
+                <div class="comment-area">
+                    <ng-container *ngFor="let cmt of postComments">
+                        <div class="comment">
+                            <div class="creator-info">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="creator-img">
+                                            <img [src]="standardImg(cmt.user.photo)" alt=""/>
+                                        </div>
+                                        <div class="creator-bi">
+                                            <div class="creator-name ">{{cmt.user.fullName}}
+
+                                            </div>
+                                            <div class="post-uptime">{{calTime(cmt.creationTime)}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn btn-danger love-per-btn"
+                                                (click)="delete(post.id)"><i class="fa fa-trash" aria-hidden="true"></i>
+                                            Xóa bình luận
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="comment-content ml-5 pl-4" style="margin-top: -15px;"
+                                     [innerHTML]="cmt.comment"></div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
     </div>

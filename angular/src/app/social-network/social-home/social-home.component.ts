@@ -82,7 +82,6 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
                 this.postCategoryService.getBySlug(this.currentCatSlug)
                     .pipe()
                     .subscribe(pc => {
-                        console.log(pc);
                         this.postCategory = pc;
                         this.currentPostCategoryId = pc.id;
                         this.loadPosts();
