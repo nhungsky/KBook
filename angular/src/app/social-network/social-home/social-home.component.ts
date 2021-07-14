@@ -315,9 +315,5 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
                 },
             }
         );
-
-        showUserProfileDialog.content.onSave.subscribe(() => {
-            window.location.reload();
-        });
     }
 }
