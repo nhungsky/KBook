@@ -14,6 +14,9 @@ import {
 import * as moment from 'moment';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MapsAPILoader} from '@agm/core';
+import {ModalUserProfileComponent} from '../modal-user-profile/modal-user-profile.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {ModalPlacesComponent} from '../modal-places/modal-places.component';
 
 declare function showLoading(): any;
 
@@ -56,6 +59,7 @@ export class RecommendPlacesComponent extends AppComponentBase implements OnInit
         private mapsAPILoader: MapsAPILoader,
         public postService: PostServiceProxy,
         public placeService: PlaceServiceProxy,
+        private _modalService: BsModalService,
         public placeCategoryService: PlaceCategoryServiceProxy,
         public postCategoryService: PostCategoryServiceProxy,
         public favoriteObjectService: FavoriteObjectServiceProxy,
@@ -106,7 +110,6 @@ export class RecommendPlacesComponent extends AppComponentBase implements OnInit
         this.places = places.items;
     }
 
-
     calPreviousHours(time: moment.Moment) {
         const now = moment(new Date());
         const res = moment.duration(now.diff(time));
@@ -142,8 +145,21 @@ export class RecommendPlacesComponent extends AppComponentBase implements OnInit
         }
     }
 
-    changePlaceCategoryId(id) {
+    async changePlaceCategoryId(id) {
         this.selectedCategoryId = id;
+        await this.loadPlaces();
+    }
+
+    showPlaceDetail(place: PlaceDto): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalPlacesComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    currentPlace: place
+                },
+            }
+        );
     }
 
     private setCurrentLocation() {

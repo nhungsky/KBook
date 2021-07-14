@@ -20,7 +20,9 @@
             <agm-marker [latitude]="markerLat" [longitude]="markerLng"></agm-marker>
             <ng-container *ngFor="let place of places">
                 <agm-marker [latitude]="place.latitude" [longitude]="place.longitude"
-                            [iconUrl]="standardImg(place.placeCategory.featureImage)" [title]="place.name"
+                            (markerClick)="showPlaceDetail(place)"
+                            [iconUrl]="{'url': standardImg(place.placeCategory.featureImage),'scaledSize': {'height': 40, 'width': 40}}"
+                            [title]="place.name"
                             [label]="place.address"></agm-marker>
             </ng-container>
         </agm-map>
