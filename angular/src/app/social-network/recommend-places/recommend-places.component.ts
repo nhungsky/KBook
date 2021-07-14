@@ -87,11 +87,23 @@ export class RecommendPlacesComponent extends AppComponentBase implements OnInit
     }
 
     async ngOnInit() {
+        const placeCategoryResult = await this.placeCategoryService.getAll('', true, 0, 1000).toPromise();
+        this.placeCategories = placeCategoryResult.items;
+
+        await this.loadPlaces();
+
         this.mapsAPILoader.load().then(() => {
             this.setCurrentLocation();
         });
-        const placeCategoryResult = await this.placeCategoryService.getAll('', true, 0, 1000).toPromise();
-        this.placeCategories = placeCategoryResult.items;
+    }
+
+    async loadPlaces() {
+        let placeCategoryId = null;
+        if (this.selectedCategoryId && this.selectedCategoryId > 0) {
+            placeCategoryId = this.selectedCategoryId;
+        }
+        const places = await this.placeService.getAll(null, true, placeCategoryId, 0, 1000).toPromise();
+        this.places = places.items;
     }
 
 

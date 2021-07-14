@@ -18,6 +18,11 @@
         <agm-map [latitude]="latitude" [longitude]="longitude" [mapTypeId]="type" [zoom]="zoom" class="w-100"
                  style="height: 86vh;" (centerChange)="onMapChanges($event)">
             <agm-marker [latitude]="markerLat" [longitude]="markerLng"></agm-marker>
+            <ng-container *ngFor="let place of places">
+                <agm-marker [latitude]="place.latitude" [longitude]="place.longitude"
+                            [iconUrl]="standardImg(place.placeCategory.featureImage)" [title]="place.name"
+                            [label]="place.address"></agm-marker>
+            </ng-container>
         </agm-map>
     </div>
     <app-loading [isLoading]="isLoading"></app-loading>

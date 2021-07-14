@@ -6,14 +6,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Abp.Application.Services.Dto;
+using ASPCore.Angular.Application.PlaceCategories.Dto;
+using ASPCore.Angular.PlaceCategories;
 
 namespace ASPCore.Angular.Places
 {
     public class PlaceAppService : AsyncCrudAppService<Place, PlaceDto, int, PagedPlaceResultRequestDto>,
         IPlaceAppService
     {
-        public PlaceAppService(IRepository<Place> repo) : base(repo)
+        private readonly IRepository<PlaceCategory> _placeCategoryService;
+
+        public PlaceAppService(IRepository<Place> repo, IRepository<PlaceCategory> placeCategoryService) : base(repo)
         {
+            _placeCategoryService = placeCategoryService;
         }
 
         protected override IQueryable<Place> CreateFilteredQuery(PagedPlaceResultRequestDto input)
@@ -27,7 +33,7 @@ namespace ASPCore.Angular.Places
             }
 
             return query;
-        }   
+        }
 
         public async Task Approval(int id)
         {
@@ -50,6 +56,22 @@ namespace ASPCore.Angular.Places
         public async Task<int> Count()
         {
             return await Repository.CountAsync(x => x.IsActive);
+        }
+
+        public override async Task<PagedResultDto<PlaceDto>> GetAllAsync(PagedPlaceResultRequestDto input)
+        {
+            var placeCategories = _placeCategoryService.GetAll().Where(x => x.IsActive).ToList();
+            var res = await base.GetAllAsync(input);
+            for (int i = 0; i < res.Items.Count; i++)
+            {
+                var placeCategory = placeCategories.FirstOrDefault(x => x.Id == res.Items[i].PlaceCategoryId);
+                if (placeCategory != null)
+                {
+                    res.Items[i].PlaceCategory = ObjectMapper.Map<PlaceCategoryDto>(placeCategory);
+                }
+            }
+
+            return res;
         }
     }
 }
