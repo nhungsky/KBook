@@ -225,6 +225,7 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
 
     saveComment() {
         this.saving = true;
+        this.postComment.postId = this.post.id;
         this.postCommentService.create(this.postComment)
             .pipe(finalize(() => {
                 this.saving = false;
