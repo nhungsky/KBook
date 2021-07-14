@@ -12,6 +12,7 @@ import {
     UserDto, UserProfileServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import {finalize} from 'rxjs/operators';
+import * as moment from 'moment';
 
 declare function showLoading(): any;
 
@@ -28,6 +29,7 @@ export class UpdateMyProfileComponent extends AppComponentBase
     genders = Genders;
     saving = false;
     userProfile = new UserDto();
+    birthDay: string;
 
     @Output() onSave = new EventEmitter<any>();
 
@@ -43,12 +45,14 @@ export class UpdateMyProfileComponent extends AppComponentBase
         showLoading();
 
         this.userProfile = await this._userProfileService.getProfile().toPromise();
+        this.birthDay = this.userProfile.birthday.format('YYYY-MM-DD');
         hideLoading();
     }
 
     save(): void {
         this.saving = true;
-
+        const d = new Date(this.birthDay);
+        this.userProfile.birthday = moment(d);
         this._userProfileService
             .updateProfile(this.userProfile)
             .pipe(
