@@ -116,7 +116,7 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
     }
 
     async loadComments() {
-        const cmts = await this.postCommentService.getAll(null, 0, 1000).toPromise();
+        const cmts = await this.postCommentService.getAll(null, this.post.id, 0, 1000).toPromise();
         this.postComments = cmts.items;
     }
 

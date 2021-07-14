@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
+using Abp.Extensions;
 using ASPCore.Angular.Authorization.Users;
 using ASPCore.Angular.Users.Dto;
 
 namespace ASPCore.Angular.PostComments
 {
-    public class PostCommentAppService : AsyncCrudAppService<PostComment, PostCommentDto>, IPostCommentAppService
+    public class PostCommentAppService :
+        AsyncCrudAppService<PostComment, PostCommentDto, int, PagedPostCommentResultRequestDto>, IPostCommentAppService
     {
         private readonly IRepository<User, long> _userRepository;
 
@@ -26,7 +28,23 @@ namespace ASPCore.Angular.PostComments
             return await Repository.CountAsync();
         }
 
-        public override async Task<PagedResultDto<PostCommentDto>> GetAllAsync(PagedAndSortedResultRequestDto input)
+        protected override IQueryable<PostComment> CreateFilteredQuery(PagedPostCommentResultRequestDto input)
+        {
+            var query = base.CreateFilteredQuery(input);
+            if (input.PostId != null && input.PostId > 0)
+            {
+                query = query.Where(x => x.PostId == input.PostId.Value);
+            }
+
+            if (!input.Keyword.IsNullOrEmpty())
+            {
+                query = query.Where(x => x.Comment.ToLower().Contains(input.Keyword.ToLower()));
+            }
+
+            return query;
+        }
+
+        public override async Task<PagedResultDto<PostCommentDto>> GetAllAsync(PagedPostCommentResultRequestDto input)
         {
             var result = await base.GetAllAsync(input);
             for (int i = 0; i < result.Items.Count; i++)

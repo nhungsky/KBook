@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace ASPCore.Angular.PostComments
 {
-    public interface IPostCommentAppService : IAsyncCrudAppService<PostCommentDto>
+    public interface
+        IPostCommentAppService : IAsyncCrudAppService<PostCommentDto, int, PagedPostCommentResultRequestDto>
     {
         public Task<int> Count();
     }
