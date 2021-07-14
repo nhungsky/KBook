@@ -5,10 +5,13 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="creator-img">
-                            <img [src]="standardImg(post.creator.photo)"/>
+                            <img [src]="standardImg(post.creator.photo)" (click)="showProfile(post.creator.id)"
+                                 style="cursor: pointer;"/>
                         </div>
                         <div class="creator-bi">
-                            <div class="creator-name ">{{post.creator.fullName}}
+                            <div class="creator-name ">
+                                <span (click)="showProfile(post.creator.id)"
+                                      style="cursor: pointer;">{{post.creator.fullName}}</span>
                                 <button *ngIf="!isUserInFavorite(post.creator.id) && currentUserId != post.creator.id"
                                         (click)="onPutFavoriteUser(post.creator.id)"
                                         class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"

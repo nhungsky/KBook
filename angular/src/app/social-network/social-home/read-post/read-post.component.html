@@ -4,10 +4,13 @@
             <div class="row">
                 <div class="col-6">
                     <div class="creator-img">
-                        <img [src]="standardImg(creator.photo)"/>
+                        <img [src]="standardImg(creator.photo)" (click)="showProfile(creator.id)"
+                             style="cursor: pointer;"/>
                     </div>
                     <div class="creator-bi">
-                        <div class="creator-name ">{{creator.fullName}}
+                        <div class="creator-name ">
+                                <span (click)="showProfile(creator.id)"
+                                      style="cursor: pointer;">{{creator.fullName}}</span>
                             <button *ngIf="!isUserInFavorite(creator.id) && currentUserId != creator.id"
                                     (click)="onPutFavoriteUser(creator.id)"
                                     class="btn btn-danger love-per-btn btn-sm ml-3"><i class="fa fa-rss"

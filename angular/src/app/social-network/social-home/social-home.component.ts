@@ -16,6 +16,8 @@ import {finalize} from 'rxjs/operators';
 import {UpdateMyProfileComponent} from '../../layout/social-header/update-my-profile/update-my-profile.component';
 import {BsModalService} from 'ngx-bootstrap/modal';
 import {ReadPostComponent} from './read-post/read-post.component';
+import {UpdatePasswordComponent} from '../../layout/social-header/update-password/update-password.component';
+import {ModalUserProfileComponent} from '../modal-user-profile/modal-user-profile.component';
 
 declare function showLoading(): any;
 
@@ -300,6 +302,22 @@ export class SocialHomeComponent extends AppComponentBase implements OnInit {
 
         readPostDialog.content.onSave.subscribe(() => {
             // window.location.reload();
+        });
+    }
+
+    showProfile(userId: number): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalUserProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: userId
+                },
+            }
+        );
+
+        showUserProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
         });
     }
 }

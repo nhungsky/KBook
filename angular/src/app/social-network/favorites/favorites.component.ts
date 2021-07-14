@@ -11,6 +11,8 @@ import {AppComponentBase} from '../../../shared/app-component-base';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as moment from 'moment';
 import {appModuleAnimation} from '../../../shared/animations/routerTransition';
+import {ModalUserProfileComponent} from '../modal-user-profile/modal-user-profile.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
 
 declare function showLoading(): any;
 
@@ -38,6 +40,7 @@ export class FavoritesComponent extends AppComponentBase implements OnInit {
 
     constructor(
         injector: Injector,
+        private _modalService: BsModalService,
         public favoriteObjectService: FavoriteObjectServiceProxy,
         public userProfileService: UserProfileServiceProxy,
         private activatedRoute: ActivatedRoute,
@@ -172,5 +175,21 @@ export class FavoritesComponent extends AppComponentBase implements OnInit {
         if (pos > max - 100) {
             this.loadPosts();
         }
+    }
+
+    showProfile(userId: number): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalUserProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: userId
+                },
+            }
+        );
+
+        showUserProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
     }
 }

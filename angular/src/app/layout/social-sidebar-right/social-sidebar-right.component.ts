@@ -14,6 +14,7 @@ import {
     API_BASE_URL
 } from '@shared/service-proxies/service-proxies';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {ModalUserProfileComponent} from '../../social-network/modal-user-profile/modal-user-profile.component';
 
 @Component({
     selector: 'app-social-sidebar-right',
@@ -99,6 +100,22 @@ export class SocialSidebarRightComponent implements OnInit {
         }
 
         createOrEditRoleDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
+    }
+
+    showProfile(userId: number): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalUserProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: userId
+                },
+            }
+        );
+
+        showUserProfileDialog.content.onSave.subscribe(() => {
             window.location.reload();
         });
     }

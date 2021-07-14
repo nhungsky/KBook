@@ -12,6 +12,8 @@ import {
     PostServiceProxy
 } from '@shared/service-proxies/service-proxies';
 import * as moment from 'moment';
+import {ModalUserProfileComponent} from '../modal-user-profile/modal-user-profile.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
 
 declare function showLoading(): any;
 
@@ -41,6 +43,7 @@ export class StickyPostsComponent extends AppComponentBase implements OnInit {
     constructor(
         injector: Injector,
         public postService: PostServiceProxy,
+        private _modalService: BsModalService,
         public postCategoryService: PostCategoryServiceProxy,
         public favoriteObjectService: FavoriteObjectServiceProxy,
         public postRatingService: PostRatingServiceProxy,
@@ -221,5 +224,21 @@ export class StickyPostsComponent extends AppComponentBase implements OnInit {
         if (pos > max - 100) {
             this.loadPosts();
         }
+    }
+
+    showProfile(userId: number): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalUserProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: userId
+                },
+            }
+        );
+
+        showUserProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
     }
 }

@@ -13,6 +13,7 @@ import {
 import * as moment from 'moment';
 import {finalize} from 'rxjs/operators';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {ModalUserProfileComponent} from '../../modal-user-profile/modal-user-profile.component';
 
 declare function showLoading(): any;
 
@@ -234,5 +235,21 @@ export class ReadPostComponent extends AppComponentBase implements OnInit {
                 this.postComment = new PostCommentDto();
                 await this.loadComments();
             });
+    }
+
+    showProfile(userId: number): void {
+        const showUserProfileDialog = this._modalService.show(
+            ModalUserProfileComponent,
+            {
+                class: 'modal-lg',
+                initialState: {
+                    id: userId
+                },
+            }
+        );
+
+        showUserProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
     }
 }

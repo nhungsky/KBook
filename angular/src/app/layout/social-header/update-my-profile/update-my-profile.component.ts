@@ -45,14 +45,20 @@ export class UpdateMyProfileComponent extends AppComponentBase
         showLoading();
 
         this.userProfile = await this._userProfileService.getProfile().toPromise();
-        this.birthDay = this.userProfile.birthday.format('YYYY-MM-DD');
+        if (this.userProfile.birthday) {
+            this.birthDay = this.userProfile.birthday.format('YYYY-MM-DD');
+        } else {
+            this.birthDay = '';
+        }
         hideLoading();
     }
 
     save(): void {
         this.saving = true;
-        const d = new Date(this.birthDay);
-        this.userProfile.birthday = moment(d);
+        if (this.birthDay && this.birthDay.length > 0) {
+            const d = new Date(this.birthDay);
+            this.userProfile.birthday = moment(d);
+        }
         this._userProfileService
             .updateProfile(this.userProfile)
             .pipe(

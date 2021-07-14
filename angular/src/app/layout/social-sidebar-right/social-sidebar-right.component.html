@@ -26,8 +26,11 @@
                                         </td>
                                         <td>
                                             <img [src]="[standardImg(tp.photo)]"
-                                                 class="nav-logo-image rounded-circle border" style="opacity: 1;"/>
-                                            {{tp.fullName}}
+                                                 class="nav-logo-image rounded-circle border"
+                                                 style="opacity: 1;cursor: pointer;"
+                                                 (click)="showProfile(tp.id)"/>
+                                            <span (click)="showProfile(tp.id)"
+                                                  style="cursor: pointer;">{{tp.fullName}}</span>
                                         </td>
                                         <td class="text-center">{{tp.postCount}} bài</td>
                                     </tr>
@@ -59,8 +62,11 @@
                                         </td>
                                         <td>
                                             <img [src]="[standardImg(tr.photo)]"
-                                                 class="nav-logo-image rounded-circle border" style="opacity: 1;"/>
-                                            {{tr.fullName}}</td>
+                                                 class="nav-logo-image rounded-circle border"
+                                                 style="opacity: 1;cursor: pointer;"
+                                                 (click)="showProfile(tr.id)"/>
+                                            <span (click)="showProfile(tr.id)"
+                                                  style="cursor: pointer;">{{tr.fullName}}</span></td>
                                         <td class="text-center">
                                             {{tr.ratingAvrg.toFixed(1)}}/5 sao ({{tr.ratingCount}} lần)
                                         </td>
