@@ -72,6 +72,7 @@ import { RecommendPlacesComponent } from './social-network/recommend-places/reco
 import { UpdateMyProfileComponent } from './layout/social-header/update-my-profile/update-my-profile.component';
 import { ReadPostComponent } from './social-network/social-home/read-post/read-post.component';
 import { UpdatePasswordComponent } from './layout/social-header/update-password/update-password.component';
+import { ModalUserProfileComponent } from './social-network/modal-user-profile/modal-user-profile.component';
 
 @NgModule({
     declarations: [
@@ -133,6 +134,7 @@ import { UpdatePasswordComponent } from './layout/social-header/update-password/
         UpdateMyProfileComponent,
         ReadPostComponent,
         UpdatePasswordComponent,
+        ModalUserProfileComponent,
     ],
     imports: [
         CommonModule,
