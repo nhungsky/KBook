@@ -1,24 +1,25 @@
 <li class="nav-item dropdown nav-user-menu" dropdown>
-  <a href="javascript:;" class="nav-link" dropdownToggle>
+    <a href="javascript:;" class="nav-link" dropdownToggle>
     <span class="brand-text font-weight-bold" style="text-transform: capitalize; padding-left: 5px;"
-      id="user-fullname">{{currentUserName}}</span>
-    <img class="user-image img-circle elevation-2" src="{{currentUserAvatar}}" alt="{{currentUserName}}" />
-  </a>
-  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-    <a class="dropdown-item" [routerLink]="['users','update-profile']">
-      <i class="fas fa-user-edit mr-2"></i> Cập nhật hồ sơ
+          id="user-fullname">{{currentUserName}}</span>
+        <img class="user-image img-circle elevation-2" src="{{standardImg(currentUserAvatar)}}"
+             alt="{{currentUserName}}"/>
     </a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" [routerLink]="['update-password']">
-      <i class="fa fa-key mr-2"></i> Đổi mật khẩu
-    </a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" [routerLink]="['/']">
-      <i class="fa fa-home mr-2"></i> Xem trang chủ
-    </a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item text-danger" href="javascript:;" (click)="logout()">
-      <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
-    </a>
-  </div>
+    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+        <a class="dropdown-item" [routerLink]="['users','update-profile']">
+            <i class="fas fa-user-edit mr-2"></i> Cập nhật hồ sơ
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" [routerLink]="['update-password']">
+            <i class="fa fa-key mr-2"></i> Đổi mật khẩu
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" [routerLink]="['/']">
+            <i class="fa fa-home mr-2"></i> Xem trang chủ
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-danger" href="javascript:;" (click)="logout()">
+            <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+        </a>
+    </div>
 </li>

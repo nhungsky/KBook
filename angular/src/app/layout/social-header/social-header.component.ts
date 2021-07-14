@@ -58,7 +58,7 @@ export class SocialHeaderComponent extends AppComponentBase
                 if (user) {
                     this.isAdmin = user.roleNames && user.roleNames.filter(x => x.toLowerCase() === 'admin'.toLowerCase()).length > 0;
                     if (user.photo) {
-                        this.currentUserAvatar = this.appBaseUrl + user.photo;
+                        this.currentUserAvatar = this.standardImg(user.photo);
                         document.querySelector('#user-image').setAttribute('src', this.currentUserAvatar);
                     }
                     if (user.fullName) {
@@ -89,5 +89,16 @@ export class SocialHeaderComponent extends AppComponentBase
         createOrEditProfileDialog.content.onSave.subscribe(() => {
             window.location.reload();
         });
+    }
+
+    standardImg(path: string) {
+        if (!path || path.length <= 0) {
+            return this.imageHolder;
+        }
+        if (path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
+        } else {
+            return `${this.appBaseUrl}/${path}`;
+        }
     }
 }
