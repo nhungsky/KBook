@@ -41,9 +41,9 @@
                     <i class="fas fa-user-edit mr-2"></i> Cập nhật hồ sơ
                 </button>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" [routerLink]="['update-password']">
+                <button class="dropdown-item" (click)="updatePassword()">
                     <i class="fa fa-key mr-2"></i> Đổi mật khẩu
-                </a>
+                </button>
                 <div *ngIf="isAdmin">
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" [routerLink]="['manager']">

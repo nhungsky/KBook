@@ -71,6 +71,7 @@ import {StickyPostsComponent} from './social-network/sticky-posts/sticky-posts.c
 import { RecommendPlacesComponent } from './social-network/recommend-places/recommend-places.component';
 import { UpdateMyProfileComponent } from './layout/social-header/update-my-profile/update-my-profile.component';
 import { ReadPostComponent } from './social-network/social-home/read-post/read-post.component';
+import { UpdatePasswordComponent } from './layout/social-header/update-password/update-password.component';
 
 @NgModule({
     declarations: [
@@ -131,6 +132,7 @@ import { ReadPostComponent } from './social-network/social-home/read-post/read-p
         RecommendPlacesComponent,
         UpdateMyProfileComponent,
         ReadPostComponent,
+        UpdatePasswordComponent,
     ],
     imports: [
         CommonModule,

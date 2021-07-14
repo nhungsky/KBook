@@ -11,6 +11,7 @@ import {AppAuthService} from '@shared/auth/app-auth.service';
 import {API_BASE_URL, RoleDto, UserProfileServiceProxy, UserServiceProxy} from '@shared/service-proxies/service-proxies';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {UpdateMyProfileComponent} from './update-my-profile/update-my-profile.component';
+import {UpdatePasswordComponent} from './update-password/update-password.component';
 
 @Component({
     selector: 'app-social-header',
@@ -54,7 +55,6 @@ export class SocialHeaderComponent extends AppComponentBase
             .getProfile()
             .pipe()
             .subscribe((user) => {
-                console.log(user);
                 if (user) {
                     this.isAdmin = user.roleNames && user.roleNames.filter(x => x.toLowerCase() === 'admin'.toLowerCase()).length > 0;
                     if (user.photo) {
@@ -74,11 +74,7 @@ export class SocialHeaderComponent extends AppComponentBase
     }
 
     updateProfile(): void {
-        this.showCreateOrEditProfileDialog();
-    }
-
-    showCreateOrEditProfileDialog(): void {
-        const createOrEditProfileDialog = this._modalService.show(
+        const updateProfileDialog = this._modalService.show(
             UpdateMyProfileComponent,
             {
                 class: 'modal-lg',
@@ -86,7 +82,21 @@ export class SocialHeaderComponent extends AppComponentBase
             }
         );
 
-        createOrEditProfileDialog.content.onSave.subscribe(() => {
+        updateProfileDialog.content.onSave.subscribe(() => {
+            window.location.reload();
+        });
+    }
+
+    updatePassword(): void {
+        const updatePasswordDialog = this._modalService.show(
+            UpdatePasswordComponent,
+            {
+                class: 'modal-lg',
+                initialState: {},
+            }
+        );
+
+        updatePasswordDialog.content.onSave.subscribe(() => {
             window.location.reload();
         });
     }
